@@ -1,6 +1,6 @@
 {
     "name": "ekandreas/bladerunner",
-    "version": "0.5",
+    "version": "0.5.1",
     "description": "WordPress Blade L5 template engine",
     "keywords": ["laravel", "blade", "wordpress"],
     "license": "MIT",
@@ -16,6 +16,6 @@
         "illuminate/events": "5.1.*"
     },
     "autoload": {
-        "files": ["src/blade.php","src/controller.php","src/model.php"]
+        "files": ["src/blade.php","src/model.php","src/controller.php"]
     }
 }

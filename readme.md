@@ -8,7 +8,7 @@ This library is not a plugin in WordPress. It's a developer library loaded with 
 To install it to your Composer based WordPress installation:
 
 ```
-composer require ekandreas\bladerunner:*
+composer require ekandreas/bladerunner:*
 ```
 
 Now, WordPress will start looking for templates with *.blade.php.
