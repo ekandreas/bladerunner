@@ -3,8 +3,6 @@ WordPress plugin for Blade L5 templating
 
 *** WORK IN PROGRESS ***
 
-This library is not a plugin in WordPress. It's a developer library loaded with PHP Composer.
-
 To install it to your Composer based WordPress installation:
 
 ```
@@ -16,12 +14,13 @@ Now, WordPress will start looking for templates with *.blade.php.
 ## Hello World
 1. Install the library with composer
 2. Make sure the cache-folder is writeable in uploads, eg ../wp-content/uploads/.cache
-3. Create a new template file inside your theme, index.blade.php
-4. Code example for the file index.blade.php:
+3. Activate the plugin
+4. Create a new template file inside your theme, index.blade.php
+5. Code example for the file index.blade.php:
 ```
 Hello World Page rendered at {{ date('Y-m-d H:i:s') }}
 ```
-5. I you got the date to render a real date then you can use all the Laravel 5 Blade syntax inside your theme templates!
+6. I you got the date to render a real date then you can use all the Laravel 5 Blade syntax inside your theme templates!
 
 http://laravel.com/docs/master/blade
 

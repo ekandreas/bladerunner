@@ -14,14 +14,14 @@ class Model {
 		if( ! $template )
 			return $template;
 
-		$template = \apply_filters( 'bladerunner/get_post_template', $template );
+		$template = apply_filters( 'bladerunner/get_post_template', $template );
 
-		$views = \get_stylesheet_directory();
+		$views = get_stylesheet_directory();
 
-		$basedir = \wp_upload_dir()['basedir'];
+		$basedir = wp_upload_dir()['basedir'];
 		$cache = $basedir . '/.cache';
 		if( !file_exists($cache) ) {
-			\wp_mkdir_p( $cache );
+			wp_mkdir_p( $cache );
 		}
 
 		$search = [ $views, '/', '.blade', '.php', ];
