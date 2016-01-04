@@ -29,6 +29,8 @@ class Model {
 		$file = str_replace( $search, $replace, $template );
 		$file = trim( $file, '.' );
 
+		if( !file_exists( get_stylesheet_directory() . '/' . $file . '.blade.php' ) ) return $template;
+
 		$blade = new Blade($views, $cache);
 
 		/*
