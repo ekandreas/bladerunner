@@ -8,8 +8,8 @@ To install it to your Composer based WordPress installation:
 ```
 composer require ekandreas/bladerunner:*
 ```
-
 Activate the plugin inside WordPress and templates with *.blade.php are inspected and active.
+Your theme still needs an index.php due to WordPress basic functionality. When removed the theme is known as broken.
 
 ## Hello World
 1. Install the library with composer
