@@ -18,10 +18,9 @@ class Model {
 
 		$views = get_stylesheet_directory();
 
-		$basedir = wp_upload_dir()['basedir'];
-		$cache = $basedir . '/.cache';
+		$cache = Model::get_cache_dir();
 		if( !file_exists($cache) ) {
-			wp_mkdir_p( $cache );
+			return $template;
 		}
 
 		$search = [ $views, '/', '.blade', '.php', ];
@@ -60,6 +59,12 @@ class Model {
 		
 		return $this->path;
 
+	}
+
+	static function get_cache_dir() {
+		$result = wp_upload_dir()['basedir'];
+		$result .= '/.cache';
+		return $result;
 	}
 
 }
