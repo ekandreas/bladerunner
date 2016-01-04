@@ -9,7 +9,7 @@ To install it to your Composer based WordPress installation:
 composer require ekandreas/bladerunner:*
 ```
 
-Now, WordPress will start looking for templates with *.blade.php.
+Activate the plugin inside WordPress and templates with *.blade.php are inspected and active.
 
 ## Hello World
 1. Install the library with composer
