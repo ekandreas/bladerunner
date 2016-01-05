@@ -38,17 +38,14 @@ class template
             return $this->path;
         }
 
-        if (!$template) {
-            return $template;
-        }
-
         $template = apply_filters('bladerunner/get_post_template', $template);
 
         $views = get_stylesheet_directory();
 
         $cache = self::cache();
-        if (!file_exists($cache)) {
-            return $template;
+        if (!file_exists($cache))
+        {
+            throw new \Exception('Bladerunner: Cache folder does not exist.');
         }
 
         $search = [$views, '/', '.blade', '.php'];
