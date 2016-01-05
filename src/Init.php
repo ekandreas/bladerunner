@@ -5,7 +5,7 @@ namespace Bladerunner;
 /**
  * Initialize the plugin inside WordPress wp-admin to check for errors.
  */
-class init
+class Init
 {
     /**
      * Constructor.

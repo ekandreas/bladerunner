@@ -5,7 +5,7 @@ namespace Bladerunner;
 /**
  * Handles the template include for blade templates.
  */
-class template
+class Template
 {
     /**
      * Saves the path in case of double object instance.
