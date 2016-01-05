@@ -1,5 +1,4 @@
 # Bladerunner
-
 [![StyleCI](https://styleci.io/repos/48002506/shield)](https://styleci.io/repos/48002506)
 
 WordPress plugin for Blade L5 templating
