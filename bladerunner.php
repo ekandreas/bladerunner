@@ -3,7 +3,7 @@
 Plugin Name:        Bladerunner
 Plugin URI:         https://github.com/ekandreas/bladerunner
 Description:        Blade template engine for WordPress
-Version:            0.6
+Version:            0.6.1
 Author:             Andreas Ek
 Author URI:         http://www.aekab.se/
 

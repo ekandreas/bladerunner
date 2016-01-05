@@ -17,7 +17,7 @@ class Init {
 	 * Check if the cache folder exists and is writable and assigns admin notice if not
 	 * @return void
 	 */
-	static function check_writeable_upload() {
+	function check_writeable_upload() {
 
 		if( !file_exists( $this->cache ) ) {
 			add_action( 'admin_notices', [ $this, 'notice_create_cache' ] ); 
@@ -37,7 +37,7 @@ class Init {
 	 * Echo admin notice inside wp-admin if cache folder doesnt exist.
 	 * @return void
 	 */
-	static function notice_create_cache() {
+	function notice_create_cache() {
         echo '<div class="error"> ';
         echo '<p><strong>Cache folder missing</strong></p>';
         echo '<p>Bladerunner needs a .cache -folder in uploads. Please create the folder and make it writable!</p>';
@@ -49,7 +49,7 @@ class Init {
 	 * Echo admin notice inside wp-admin if cache folder not writable.
 	 * @return void
 	 */
-	static function notice_writable_cache() {
+	function notice_writable_cache() {
         echo '<div class="error"> ';
         echo '<p><strong>Cache not writable</strong></p>';
         echo '<p>Bladerunner cache folder .cache in uploads not writable. Please make the folder writable for your web server!</p>';
