@@ -32,6 +32,40 @@ class init
     }
 
     /**
+     * Creates the public cache folder.
+     */
+    public static function create_cache_directory()
+    {
+        wp_mkdir_p(Template::cache());
+    }
+
+    /**
+     * Deletes the public cache folder.
+     */
+    public static function delete_cache_directory()
+    {
+        self::delete_directory(Template::cache());
+    }
+
+    /**
+     * Helper function
+     * http://php.net/manual/en/function.rmdir.php#114183 - source.
+     *
+     * @param $dir
+     *
+     * @return bool
+     */
+    public static function delete_directory($dir)
+    {
+        $files = array_diff(scandir($dir), ['.', '..']);
+        foreach ($files as $file) {
+            (is_dir("$dir/$file") && !is_link($dir)) ? self::delete_directory("$dir/$file") : unlink("$dir/$file");
+        }
+        
+        return rmdir($dir);
+    }
+
+    /**
      * Echo admin notice inside wp-admin if cache folder doesnt exist.
      *
      * @return void

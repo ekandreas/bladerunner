@@ -22,3 +22,6 @@ require_once __DIR__.'/src/blade.php';
 
 new Bladerunner\Init();
 new Bladerunner\Template();
+
+register_activation_hook(__FILE__, '\Bladerunner\Init::create_cache_directory');
+register_deactivation_hook(__FILE__, '\Bladerunner\Init::delete_cache_directory');
