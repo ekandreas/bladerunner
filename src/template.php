@@ -38,6 +38,10 @@ class template
             return $this->path;
         }
 
+        if (!$template) {
+            return $template;
+        }
+
         $template = apply_filters('bladerunner/get_post_template', $template);
 
         $views = get_stylesheet_directory();
