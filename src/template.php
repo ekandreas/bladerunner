@@ -18,7 +18,7 @@ class Template {
 	 */
 	function __construct() {
 
-		add_action( 'template_include', [ $this, 'path' ], 999 );
+		add_filter( 'template_include', [ $this, 'path' ] );
 		add_filter( 'index_template', function() { return 'index.blade.php'; } );
 		//add_filter( 'page_template', [ $model, 'getPath' ] );
 		//add_filter( 'bp_template_include', [ $model, 'getPath' ] );
@@ -56,26 +56,18 @@ class Template {
 
 		$blade = new Blade($views, $cache);
 
-		/*
-		$blade->getCompiler()->directive( 'papi', function( $expression )
-		{
-			$expression = preg_replace( '#\((.*)\)#', '$1', $expression );
-		    return "<?php echo papi_get_field( \$module->ID, $expression ); ?>";
-		});
-		*/
-	
 		$view = $blade->view()->make($file);
-
-		$content = $view->render();
-
-		ob_start();
-		echo $content;
-		$content = ob_get_contents();
-		ob_end_clean();
 
 		$pathToCompiled = $cache . '/' . md5( $view->getPath() ) .'.compiled.php';
 
+		$content = $view->render();
+
 		if( !file_exists($pathToCompiled) || md5_file( $pathToCompiled ) != md5( $content ) ) {
+			ob_start();
+			echo $content;
+			$content = ob_get_contents();
+			ob_end_clean();
+
 			file_put_contents( $pathToCompiled, $content );
 		}
 
