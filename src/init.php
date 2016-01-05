@@ -9,7 +9,7 @@ class init
 {
     public function __construct()
     {
-        add_action('admin_init', '\Bladerunner\Init::check_writeable_upload');
+        add_action('admin_init', '\Bladerunner\init::check_writeable_upload');
     }
 
     /**
@@ -19,14 +19,14 @@ class init
      */
     public static function check_writeable_upload()
     {
-        $cache = Template::cache();
+        $cache = template::cache();
 
         if (!file_exists($cache)) {
-            add_action('admin_notices', '\Bladerunner\Init::notice_create_cache');
+            add_action('admin_notices', '\Bladerunner\init::notice_create_cache');
         } else {
             $is_writable = @file_put_contents($cache.'/.folder_writable', 'true');
             if (!$is_writable) {
-                add_action('admin_notices', '\Bladerunner\Init::notice_writable_cache');
+                add_action('admin_notices', '\Bladerunner\init::notice_writable_cache');
             }
         }
     }
@@ -38,7 +38,7 @@ class init
      */
     public static function notice_create_cache()
     {
-        $cache = Template::cache();
+        $cache = template::cache();
         echo '<div class="error"> ';
         echo '<p><strong>Cache folder missing</strong></p>';
         echo '<p>Bladerunner needs a .cache -folder in uploads. Please create the folder and make it writable!</p>';
@@ -53,7 +53,7 @@ class init
      */
     public static function notice_writable_cache()
     {
-        $cache = Template::cache();
+        $cache = template::cache();
         echo '<div class="error"> ';
         echo '<p><strong>Cache not writable</strong></p>';
         echo '<p>Bladerunner cache folder .cache in uploads not writable. Please make the folder writable for your web server!</p>';
