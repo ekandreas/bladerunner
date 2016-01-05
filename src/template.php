@@ -70,7 +70,7 @@ class template
 
         $expired = $wp_debug || (!file_exists($pathToCompiled)) || $blade->getCompiler()->isExpired($view->getPath());
 
-        if ( $expired ) {
+        if ($expired) {
             $content = $view->render();
             ob_start();
             echo $content;
