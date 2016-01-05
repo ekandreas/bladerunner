@@ -60,15 +60,18 @@ class template
             return $template;
         }
 
-        $blade = new Blade($views, $cache);
+        $blade = new blade($views, $cache);
 
         $view = $blade->view()->make($file);
 
         $pathToCompiled = $cache.'/'.md5($view->getPath()).'.compiled.php';
 
-        $content = $view->render();
+        $wp_debug = defined('WP_DEBUG') && WP_DEBUG;
 
-        if (!file_exists($pathToCompiled) || md5_file($pathToCompiled) != md5($content)) {
+        $expired = $wp_debug || (!file_exists($pathToCompiled)) || $blade->getCompiler()->isExpired($view->getPath());
+
+        if ( $expired ) {
+            $content = $view->render();
             ob_start();
             echo $content;
             $content = ob_get_contents();
