@@ -16,14 +16,12 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
 }
 
-require_once __DIR__.'/src/Cache.php';
 require_once __DIR__.'/src/Init.php';
 require_once __DIR__.'/src/Template.php';
 require_once __DIR__.'/src/Blade.php';
 
-new Bladerunner\Cache();
 new Bladerunner\Init();
 new Bladerunner\Template();
 
-register_activation_hook(__FILE__, '\Bladerunner\Init::create_cache_directory');
-register_deactivation_hook(__FILE__, '\Bladerunner\Init::delete_cache_directory');
+register_activation_hook(__FILE__, '\Bladerunner\init::createCacheDirectory');
+register_deactivation_hook(__FILE__, '\Bladerunner\init::deleteCacheDirectory');
