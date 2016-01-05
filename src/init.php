@@ -61,7 +61,7 @@ class init
         foreach ($files as $file) {
             (is_dir("$dir/$file") && !is_link($dir)) ? self::delete_directory("$dir/$file") : unlink("$dir/$file");
         }
-        
+
         return rmdir($dir);
     }
 
