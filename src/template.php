@@ -5,7 +5,7 @@ namespace Bladerunner;
 /**
  * Handles the template include for blade templates.
  */
-class template
+class Template
 {
     /**
      * Saves the path in case of double object instance.
@@ -46,7 +46,7 @@ class template
 
         $views = get_stylesheet_directory();
 
-        $cache = self::cache();
+        $cache = Cache::path();
         if (!file_exists($cache)) {
             throw new \Exception('Bladerunner: Cache folder does not exist.');
         }
@@ -64,13 +64,9 @@ class template
 
         $view = $blade->view()->make($file);
 
-        $pathToCompiled = $cache.'/'.md5($view->getPath()).'.compiled.php';
+        $compiled_path = $cache.'/'.md5($view->getPath()).'.compiled.php';
 
-        $wp_debug = defined('WP_DEBUG') && WP_DEBUG;
-
-        $expired = $wp_debug || (!file_exists($pathToCompiled)) || $blade->getCompiler()->isExpired($view->getPath());
-
-        if ($expired) {
+        if (Cache::expired($blade, $view, $compiled_path)) {
             $content = $view->render();
 
             $compilation_stamp = apply_filters('bladerunner/compilation_stamp', "\n\n<!-- Bladerunner page compiled ".date('Y-m-d H:i:s')." -->\n\n");
@@ -82,24 +78,12 @@ class template
             $content = ob_get_contents();
             ob_end_clean();
 
-            file_put_contents($pathToCompiled, $content);
+            file_put_contents($compiled_path, $content);
         }
 
-        $this->path = $pathToCompiled;
+        $this->path = $compiled_path;
 
         return $this->path;
     }
 
-    /**
-     * Gets the cache folder for Bladerunner.
-     *
-     * @return [type] [description]
-     */
-    public static function cache()
-    {
-        $result = wp_upload_dir()['basedir'];
-        $result .= '/.cache';
-
-        return apply_filters('bladerunner/cache', $result);
-    }
 }

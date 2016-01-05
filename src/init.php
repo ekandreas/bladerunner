@@ -19,7 +19,7 @@ class init
      */
     public static function check_writeable_upload()
     {
-        $cache = template::cache();
+        $cache = Cache::path();
 
         if (!file_exists($cache)) {
             add_action('admin_notices', '\Bladerunner\Init::notice_create_cache');
@@ -36,7 +36,7 @@ class init
      */
     public static function create_cache_directory()
     {
-        wp_mkdir_p(Template::cache());
+        wp_mkdir_p(Cache::path());
     }
 
     /**
@@ -44,7 +44,7 @@ class init
      */
     public static function delete_cache_directory()
     {
-        self::delete_directory(Template::cache());
+        self::delete_directory(Cache::path());
     }
 
     /**
@@ -72,7 +72,7 @@ class init
      */
     public static function notice_create_cache()
     {
-        $cache = Template::cache();
+        $cache = Cache::path();
         echo '<div class="error"> ';
         echo '<p><strong>Cache folder missing</strong></p>';
         echo '<p>Bladerunner needs a .cache -folder in uploads. Please create the folder and make it writable!</p>';
@@ -87,7 +87,7 @@ class init
      */
     public static function notice_writable_cache()
     {
-        $cache = Template::cache();
+        $cache = Cache::path();
         echo '<div class="error"> ';
         echo '<p><strong>Cache not writable</strong></p>';
         echo '<p>Bladerunner cache folder .cache in uploads not writable. Please make the folder writable for your web server!</p>';

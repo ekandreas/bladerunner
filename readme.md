@@ -1,4 +1,7 @@
 # Bladerunner
+
+[![StyleCI](https://styleci.io/repos/48002506/shield)](https://styleci.io/repos/48002506)
+
 WordPress plugin for Blade L5 templating
 
 To install it to your Composer based WordPress installation:
@@ -26,6 +29,7 @@ https://laravel.com/docs/5.2/blade
 
 ## Cache
 * If WP_DEBUG is set and true then templates always will be rendered and updated.
+* View files (cache) is invalidated at save_post.
 * (It's a really good idea to empty the .cache folder inside "uploads" when develop templates. Eg, create a "del" command inside your gulp-file.)
 
 ## Directories
