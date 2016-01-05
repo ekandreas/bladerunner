@@ -5,7 +5,7 @@ namespace Bladerunner;
 /**
  * Handles the template include for blade templates.
  */
-class Template
+class template
 {
     /**
      * Saves the path in case of double object instance.
@@ -47,8 +47,7 @@ class Template
         $views = get_stylesheet_directory();
 
         $cache = self::cache();
-        if (!file_exists($cache))
-        {
+        if (!file_exists($cache)) {
             throw new \Exception('Bladerunner: Cache folder does not exist.');
         }
 
