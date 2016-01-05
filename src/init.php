@@ -9,7 +9,7 @@ class init
 {
     public function __construct()
     {
-        add_action('admin_init', '\Bladerunner\Init::check_writeable_upload');
+        add_action('admin_init', '\Bladerunner\Init::checkWriteableUpload');
     }
 
     /**
@@ -17,16 +17,16 @@ class init
      *
      * @return void
      */
-    public static function check_writeable_upload()
+    public static function checkWriteableUpload()
     {
         $cache = template::cache();
 
         if (!file_exists($cache)) {
-            add_action('admin_notices', '\Bladerunner\Init::notice_create_cache');
+            add_action('admin_notices', '\Bladerunner\Init::noticeCreateCache');
         } else {
             $is_writable = @file_put_contents($cache.'/.folder_writable', 'true');
             if (!$is_writable) {
-                add_action('admin_notices', '\Bladerunner\Init::notice_writable_cache');
+                add_action('admin_notices', '\Bladerunner\Init::noticeWritableCache');
             }
         }
     }
@@ -34,7 +34,7 @@ class init
     /**
      * Creates the public cache folder.
      */
-    public static function create_cache_directory()
+    public static function createCacheDirectory()
     {
         wp_mkdir_p(Template::cache());
     }
@@ -42,9 +42,9 @@ class init
     /**
      * Deletes the public cache folder.
      */
-    public static function delete_cache_directory()
+    public static function deleteCacheDirectory()
     {
-        self::delete_directory(Template::cache());
+        self::deleteDirectory(Template::cache());
     }
 
     /**
@@ -55,11 +55,11 @@ class init
      *
      * @return bool
      */
-    public static function delete_directory($dir)
+    public static function deleteDirectory($dir)
     {
         $files = array_diff(scandir($dir), ['.', '..']);
         foreach ($files as $file) {
-            (is_dir("$dir/$file") && !is_link($dir)) ? self::delete_directory("$dir/$file") : unlink("$dir/$file");
+            (is_dir("$dir/$file") && !is_link($dir)) ? self::deleteDirectory("$dir/$file") : unlink("$dir/$file");
         }
 
         return rmdir($dir);
@@ -70,7 +70,7 @@ class init
      *
      * @return void
      */
-    public static function notice_create_cache()
+    public static function noticeCreateCache()
     {
         $cache = Template::cache();
         echo '<div class="error"> ';
@@ -85,7 +85,7 @@ class init
      *
      * @return void
      */
-    public static function notice_writable_cache()
+    public static function noticeWritableCache()
     {
         $cache = Template::cache();
         echo '<div class="error"> ';
