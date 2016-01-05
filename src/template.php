@@ -2,11 +2,35 @@
 namespace Bladerunner;
 use Bladerunner\Blade;
 
-class Model {
+/**
+ * Handles the template include for blade templates
+ */
+class Template {
 
+	/**
+	 * Saves the path in case of double object instance
+	 * @var [type]
+	 */
 	protected $path;
 
-	function getPath( $template ) {
+	/**
+	 * [__construct description]
+	 */
+	function __construct() {
+
+		add_action( 'template_include', [ $this, 'path' ], 999 );
+		add_filter( 'index_template', function() { return 'index.blade.php'; } );
+		//add_filter( 'page_template', [ $model, 'getPath' ] );
+		//add_filter( 'bp_template_include', [ $model, 'getPath' ] );
+		
+	}
+
+	/**
+	 * The hook for template_include to override blade templating
+	 * @param  [type] $template [description]
+	 * @return [type]           [description]
+	 */
+	function path( $template ) {
 
 		if( $this->path )
 			return $this->path;
@@ -18,7 +42,7 @@ class Model {
 
 		$views = get_stylesheet_directory();
 
-		$cache = Model::get_cache_dir();
+		$cache = Template::cache();
 		if( !file_exists($cache) ) {
 			return $template;
 		}
@@ -61,10 +85,14 @@ class Model {
 
 	}
 
-	static function get_cache_dir() {
+	/**
+	 * Gets the cache folder for Bladerunner
+	 * @return [type] [description]
+	 */
+	static function cache() {
 		$result = wp_upload_dir()['basedir'];
 		$result .= '/.cache';
-		return $result;
+		return apply_filters('bladerunner/cache', $result);
 	}
 
 }

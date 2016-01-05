@@ -1,8 +1,6 @@
 # Bladerunner
 WordPress plugin for Blade L5 templating
 
-*** WORK IN PROGRESS ***
-
 To install it to your Composer based WordPress installation:
 
 ```
@@ -25,6 +23,9 @@ Hello World Page rendered at {{ date('Y-m-d H:i:s') }}
 6. I you got the date to render a real date then you can use all the Laravel 5 Blade syntax inside your theme templates!
 
 http://laravel.com/docs/master/blade
+
+## Cache
+* It's a really good idea to empty the .cache folder inside "uploads" when develop templates. Eg, create a "del" command inside your gulp-file.
 
 ## Directories
 * Your cached views will always be stored in your wp upload folder, .cache.
