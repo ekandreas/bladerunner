@@ -11,6 +11,8 @@ composer require ekandreas/bladerunner:*
 Activate the plugin inside WordPress and templates with *.blade.php are inspected and active.
 Your theme still needs an index.php due to WordPress basic functionality. When removed the theme is known as broken.
 
+If you don't use a composer based WordPress development environment you can download the latest distributed plugin at [AEKAB, Bladerunner site](http://bladerunner.aekab.se/bladerunner.zip) and install it the common way with zip upload to WordPress via wp-admin.
+
 ## Hello World
 1. Install the library with composer
 2. Make sure the cache-folder is writeable in uploads, eg ../wp-content/uploads/.cache
