@@ -85,5 +85,4 @@ class Template
 
         return $this->path;
     }
-
 }
