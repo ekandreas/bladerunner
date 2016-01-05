@@ -5,11 +5,11 @@ namespace Bladerunner;
 /**
  * Initialize the plugin inside WordPress wp-admin to check for errors.
  */
-class init
+class Init
 {
     public function __construct()
     {
-        add_action('admin_init', '\Bladerunner\init::check_writeable_upload');
+        add_action('admin_init', '\Bladerunner\Init::check_writeable_upload');
     }
 
     /**
@@ -22,11 +22,11 @@ class init
         $cache = template::cache();
 
         if (!file_exists($cache)) {
-            add_action('admin_notices', '\Bladerunner\init::notice_create_cache');
+            add_action('admin_notices', '\Bladerunner\Init::notice_create_cache');
         } else {
             $is_writable = @file_put_contents($cache.'/.folder_writable', 'true');
             if (!$is_writable) {
-                add_action('admin_notices', '\Bladerunner\init::notice_writable_cache');
+                add_action('admin_notices', '\Bladerunner\Init::notice_writable_cache');
             }
         }
     }
@@ -36,7 +36,7 @@ class init
      */
     public static function create_cache_directory()
     {
-        wp_mkdir_p(template::cache());
+        wp_mkdir_p(Template::cache());
     }
 
     /**
@@ -44,7 +44,7 @@ class init
      */
     public static function delete_cache_directory()
     {
-        self::delete_directory(template::cache());
+        self::delete_directory(Template::cache());
     }
 
     /**
@@ -72,7 +72,7 @@ class init
      */
     public static function notice_create_cache()
     {
-        $cache = template::cache();
+        $cache = Template::cache();
         echo '<div class="error"> ';
         echo '<p><strong>Cache folder missing</strong></p>';
         echo '<p>Bladerunner needs a .cache -folder in uploads. Please create the folder and make it writable!</p>';
@@ -87,7 +87,7 @@ class init
      */
     public static function notice_writable_cache()
     {
-        $cache = template::cache();
+        $cache = Template::cache();
         echo '<div class="error"> ';
         echo '<p><strong>Cache not writable</strong></p>';
         echo '<p>Bladerunner cache folder .cache in uploads not writable. Please make the folder writable for your web server!</p>';

@@ -5,7 +5,7 @@ namespace Bladerunner;
 /**
  * Handles the template include for blade templates.
  */
-class template
+class Template
 {
     /**
      * Saves the path in case of double object instance.
@@ -60,7 +60,7 @@ class template
             return $template;
         }
 
-        $blade = new blade($views, $cache);
+        $blade = new Blade($views, $cache);
 
         $view = $blade->view()->make($file);
 
@@ -72,6 +72,11 @@ class template
 
         if ($expired) {
             $content = $view->render();
+
+            $compilation_stamp = apply_filters('bladerunner/compilation_stamp', "\n\n<!-- Bladerunner page compiled ".date('Y-m-d H:i:s')." -->\n\n");
+
+            $content .= $compilation_stamp;
+
             ob_start();
             echo $content;
             $content = ob_get_contents();

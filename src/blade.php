@@ -13,7 +13,7 @@ use Illuminate\View\Engines\PhpEngine;
 use Illuminate\View\Factory;
 use Illuminate\View\FileViewFinder;
 
-class blade
+class Blade
 {
     /**
      * Array containing paths where to look for blade files.
