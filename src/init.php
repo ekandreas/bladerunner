@@ -36,7 +36,7 @@ class init
      */
     public static function create_cache_directory()
     {
-        wp_mkdir_p(Template::cache());
+        wp_mkdir_p(template::cache());
     }
 
     /**
@@ -44,7 +44,7 @@ class init
      */
     public static function delete_cache_directory()
     {
-        self::delete_directory(Template::cache());
+        self::delete_directory(template::cache());
     }
 
     /**
