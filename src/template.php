@@ -10,12 +10,12 @@ class template
     /**
      * Saves the path in case of double object instance.
      *
-     * @var [type]
+     * @var string
      */
     protected $path;
 
     /**
-     * [__construct description].
+     * Constructor.
      */
     public function __construct()
     {
@@ -28,9 +28,11 @@ class template
     /**
      * The hook for template_include to override blade templating.
      *
-     * @param [type] $template [description]
+     * @param string $template
      *
-     * @return [type] [description]
+     * @throws \Exception
+     *
+     * @return string
      */
     public function path($template)
     {
@@ -93,7 +95,7 @@ class template
     /**
      * Gets the cache folder for Bladerunner.
      *
-     * @return [type] [description]
+     * @return string
      */
     public static function cache()
     {
