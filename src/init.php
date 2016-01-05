@@ -52,6 +52,7 @@ class init
      * http://php.net/manual/en/function.rmdir.php#114183 - source.
      *
      * @param $dir
+     *
      * @return bool
      */
     public static function delete_directory($dir)
