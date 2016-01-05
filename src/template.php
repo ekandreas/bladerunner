@@ -1,92 +1,97 @@
 <?php
+
 namespace Bladerunner;
-use Bladerunner\Blade;
 
 /**
- * Handles the template include for blade templates
+ * Handles the template include for blade templates.
  */
-class Template {
+class template
+{
+    /**
+     * Saves the path in case of double object instance.
+     *
+     * @var [type]
+     */
+    protected $path;
 
-	/**
-	 * Saves the path in case of double object instance
-	 * @var [type]
-	 */
-	protected $path;
+    /**
+     * [__construct description].
+     */
+    public function __construct()
+    {
+        add_filter('template_include', [$this, 'path']);
+        add_filter('index_template', function () { return 'index.blade.php'; });
+        //add_filter( 'page_template', [ $model, 'getPath' ] );
+        //add_filter( 'bp_template_include', [ $model, 'getPath' ] );
+    }
 
-	/**
-	 * [__construct description]
-	 */
-	function __construct() {
+    /**
+     * The hook for template_include to override blade templating.
+     *
+     * @param [type] $template [description]
+     *
+     * @return [type] [description]
+     */
+    public function path($template)
+    {
+        if ($this->path) {
+            return $this->path;
+        }
 
-		add_filter( 'template_include', [ $this, 'path' ] );
-		add_filter( 'index_template', function() { return 'index.blade.php'; } );
-		//add_filter( 'page_template', [ $model, 'getPath' ] );
-		//add_filter( 'bp_template_include', [ $model, 'getPath' ] );
-		
-	}
+        if (!$template) {
+            return $template;
+        }
 
-	/**
-	 * The hook for template_include to override blade templating
-	 * @param  [type] $template [description]
-	 * @return [type]           [description]
-	 */
-	function path( $template ) {
+        $template = apply_filters('bladerunner/get_post_template', $template);
 
-		if( $this->path )
-			return $this->path;
+        $views = get_stylesheet_directory();
 
-		if( ! $template )
-			return $template;
+        $cache = self::cache();
+        if (!file_exists($cache)) {
+            return $template;
+        }
 
-		$template = apply_filters( 'bladerunner/get_post_template', $template );
+        $search = [$views, '/', '.blade', '.php'];
+        $replace = ['', '.', '', ''];
+        $file = str_replace($search, $replace, $template);
+        $file = trim($file, '.');
 
-		$views = get_stylesheet_directory();
+        if (!file_exists(get_stylesheet_directory().'/'.$file.'.blade.php')) {
+            return $template;
+        }
 
-		$cache = Template::cache();
-		if( !file_exists($cache) ) {
-			return $template;
-		}
+        $blade = new Blade($views, $cache);
 
-		$search = [ $views, '/', '.blade', '.php', ];
-		$replace = [ '', '.', '', '', ];
-		$file = str_replace( $search, $replace, $template );
-		$file = trim( $file, '.' );
+        $view = $blade->view()->make($file);
 
-		if( !file_exists( get_stylesheet_directory() . '/' . $file . '.blade.php' ) ) return $template;
+        $pathToCompiled = $cache.'/'.md5($view->getPath()).'.compiled.php';
 
-		$blade = new Blade($views, $cache);
+        $content = $view->render();
 
-		$view = $blade->view()->make($file);
+        if (!file_exists($pathToCompiled) || md5_file($pathToCompiled) != md5($content)) {
+            ob_start();
+            echo $content;
+            $content = ob_get_contents();
+            ob_end_clean();
 
-		$pathToCompiled = $cache . '/' . md5( $view->getPath() ) .'.compiled.php';
+            file_put_contents($pathToCompiled, $content);
+        }
 
-		$content = $view->render();
+        $this->path = $pathToCompiled;
 
-		if( !file_exists($pathToCompiled) || md5_file( $pathToCompiled ) != md5( $content ) ) {
-			ob_start();
-			echo $content;
-			$content = ob_get_contents();
-			ob_end_clean();
+        return $this->path;
+    }
 
-			file_put_contents( $pathToCompiled, $content );
-		}
+    /**
+     * Gets the cache folder for Bladerunner.
+     *
+     * @return [type] [description]
+     */
+    public static function cache()
+    {
+        $result = wp_upload_dir()['basedir'];
+        $result .= '/.cache';
 
-		$this->path = $pathToCompiled;
-		
-		return $this->path;
-
-	}
-
-	/**
-	 * Gets the cache folder for Bladerunner
-	 * @return [type] [description]
-	 */
-	static function cache() {
-		$result = wp_upload_dir()['basedir'];
-		$result .= '/.cache';
-		return apply_filters('bladerunner/cache', $result);
-	}
-
+        return apply_filters('bladerunner/cache', $result);
+    }
 }
-
-
