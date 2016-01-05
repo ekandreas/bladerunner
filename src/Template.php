@@ -5,17 +5,17 @@ namespace Bladerunner;
 /**
  * Handles the template include for blade templates.
  */
-class Template
+class template
 {
     /**
      * Saves the path in case of double object instance.
      *
-     * @var [type]
+     * @var string
      */
     protected $path;
 
     /**
-     * [__construct description].
+     * Constructor.
      */
     public function __construct()
     {
@@ -28,9 +28,11 @@ class Template
     /**
      * The hook for template_include to override blade templating.
      *
-     * @param [type] $template [description]
+     * @param string $template
      *
-     * @return [type] [description]
+     * @throws \Exception
+     *
+     * @return string
      */
     public function path($template)
     {
@@ -46,7 +48,7 @@ class Template
 
         $views = get_stylesheet_directory();
 
-        $cache = Cache::path();
+        $cache = self::cache();
         if (!file_exists($cache)) {
             throw new \Exception('Bladerunner: Cache folder does not exist.');
         }
@@ -64,9 +66,13 @@ class Template
 
         $view = $blade->view()->make($file);
 
-        $compiled_path = $cache.'/'.md5($view->getPath()).'.compiled.php';
+        $pathToCompiled = $cache.'/'.md5($view->getPath()).'.compiled.php';
 
-        if (Cache::expired($blade, $view, $compiled_path)) {
+        $wp_debug = defined('WP_DEBUG') && WP_DEBUG;
+
+        $expired = $wp_debug || (!file_exists($pathToCompiled)) || $blade->getCompiler()->isExpired($view->getPath());
+
+        if ($expired) {
             $content = $view->render();
 
             $compilation_stamp = apply_filters('bladerunner/compilation_stamp', "\n\n<!-- Bladerunner page compiled ".date('Y-m-d H:i:s')." -->\n\n");
@@ -78,12 +84,24 @@ class Template
             $content = ob_get_contents();
             ob_end_clean();
 
-            file_put_contents($compiled_path, $content);
+            file_put_contents($pathToCompiled, $content);
         }
 
-        $this->path = $compiled_path;
+        $this->path = $pathToCompiled;
 
         return $this->path;
     }
 
+    /**
+     * Gets the cache folder for Bladerunner.
+     *
+     * @return string
+     */
+    public static function cache()
+    {
+        $result = wp_upload_dir()['basedir'];
+        $result .= '/.cache';
+
+        return apply_filters('bladerunner/cache', $result);
+    }
 }
