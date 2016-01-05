@@ -65,11 +65,19 @@ class blade
         $this->instance = $this->registerFactory();
     }
 
+    /**
+     * Get the view instance.
+     *
+     * @return Illuminate\View\Factory|void
+     */
     public function view()
     {
         return $this->instance;
     }
 
+    /**
+     * Register filesystem.
+     */
     public function registerFilesystem()
     {
         $this->container->singleton('files', function () {
@@ -77,6 +85,11 @@ class blade
         });
     }
 
+    /**
+     * Register events.
+     *
+     * @param \Illuminate\Events\Dispatcher $events
+     */
     public function registerEvents(Dispatcher $events)
     {
         $this->container->singleton('events', function () use ($events) {
@@ -184,6 +197,11 @@ class blade
         return $env;
     }
 
+    /**
+     * Get the Blade compiler.
+     *
+     * @return \Illuminate\View\Compilers\BladeCompiler
+     */
     public function getCompiler()
     {
         return $this->container['blade.compiler'];
