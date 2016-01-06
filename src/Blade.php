@@ -29,20 +29,20 @@ class Blade
     public $cachePath;
 
     /**
-     * @var Illuminate\Container\Container
+     * @var \Illuminate\Container\Container
      */
     protected $container;
 
     /**
-     * @var Illuminate\View\Factory
+     * @var \Illuminate\View\Factory
      */
     protected $instance;
 
     /**
      * Initialize class.
      *
-     * @param array                        $viewPaths
-     * @param string                       $cachePath
+     * @param array                         $viewPaths
+     * @param string                        $cachePath
      * @param \Illuminate\Events\Dispatcher $events
      */
     public function __construct($viewPaths = [], $cachePath, Dispatcher $events = null)

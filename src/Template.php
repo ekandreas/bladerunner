@@ -35,7 +35,7 @@ class Template
     /**
      * The hook for template_include to override blade templating.
      *
-     * @param string $template
+     * @param  string $template
      *
      * @throws \Exception
      *

@@ -16,7 +16,11 @@ class Cache
     }
 
     /**
-     * Return true if compilation expired
+     * Return true if compilation expired.
+     *
+     * @param \Bladerunner\Blade       $blade
+     * @param \Illuminate\View\Factory $view
+     * @param string                   $path
      */
     public static function expired($blade, $view, $path)
     {
@@ -45,7 +49,7 @@ class Cache
     }
 
     /**
-     * Remove all views in cache folder
+     * Remove all views in cache folder.
      */
     public static function removeAllViews()
     {

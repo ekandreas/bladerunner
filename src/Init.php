@@ -22,7 +22,7 @@ class Init
      */
     public static function checkWriteableUpload()
     {
-        $cache = template::cache();
+        $cache = Template::cache();
 
         if (!file_exists($cache)) {
             add_action('admin_notices', '\Bladerunner\Init::noticeCreateCache');
@@ -51,7 +51,7 @@ class Init
     }
 
     /**
-     * Helper function
+     * Helper function.
      * http://php.net/manual/en/function.rmdir.php#114183 - source.
      *
      * @param  string $dir
