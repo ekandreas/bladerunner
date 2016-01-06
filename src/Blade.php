@@ -1,4 +1,5 @@
 <?php
+
 namespace Bladerunner;
 
 use Illuminate\Container\Container;
@@ -42,7 +43,7 @@ class Blade
      *
      * @param array                        $viewPaths
      * @param string                       $cachePath
-     * @param Illuminate\Events\Dispatcher $events
+     * @param \Illuminate\Events\Dispatcher $events
      */
     public function __construct($viewPaths = [], $cachePath, Dispatcher $events = null)
     {
@@ -66,7 +67,7 @@ class Blade
     /**
      * Get the view instance.
      *
-     * @return Illuminate\View\Factory|void
+     * @return \Illuminate\View\Factory|void
      */
     public function view()
     {

@@ -21,7 +21,7 @@ class Template
     {
         add_filter('template_include', [$this, 'path'], 999);
 
-        $this->add_template_filters();
+        $this->addTemplateFilters();
     }
 
     /**
@@ -104,25 +104,28 @@ class Template
         return apply_filters('bladerunner/cache', $result);
     }
 
-    private function add_template_filters()
+    /**
+     * Add template filters.
+     */
+    private function addTemplateFilters()
     {
         $types = [
-            'index' => 'index.blade.php',
-            'home' => 'index.blade.php',
-            'single' => 'single.blade.php',
-            'page' => 'page.blade.php',
-            '404' => '404.blade.php',
-            'archive' => 'archive.blade.php',
-            'author' => 'author.blade.php',
-            'category' => 'category.blade.php',
-            'tag' => 'tag.blade.php',
-            'taxonomy' => 'taxonomy.blade.php',
-            'date' => 'date.blade.php',
+            'index'      => 'index.blade.php',
+            'home'       => 'index.blade.php',
+            'single'     => 'single.blade.php',
+            'page'       => 'page.blade.php',
+            '404'        => '404.blade.php',
+            'archive'    => 'archive.blade.php',
+            'author'     => 'author.blade.php',
+            'category'   => 'category.blade.php',
+            'tag'        => 'tag.blade.php',
+            'taxonomy'   => 'taxonomy.blade.php',
+            'date'       => 'date.blade.php',
             'front-page' => 'front-page.blade.php',
-            'paged' => 'paged.blade.php',
-            'search' => 'search.blade.php',
-            'single' => 'single.blade.php',
-            'singular' => 'singular.blade.php',
+            'paged'      => 'paged.blade.php',
+            'search'     => 'search.blade.php',
+            'single'     => 'single.blade.php',
+            'singular'   => 'singular.blade.php',
             'attachment' => 'attachment.blade.php',
         ];
 
