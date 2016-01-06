@@ -26,11 +26,10 @@ class Template
     /**
      * Adding {$type}_template to WP
      */
-    public static function init()
+    public function init()
     {
         $this->addTemplateFilters();
     }
-
 
     /**
      * The hook for template_include to override blade templating.
