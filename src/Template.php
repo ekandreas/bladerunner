@@ -65,7 +65,10 @@ class Template
 
         $view = $blade->view()->make($file);
 
-        $pathToCompiled = $cache.'/'.md5($view->getPath()).'.compiled.php';
+        $id = (int)get_the_ID();
+        $id = $id ? $id : '';
+
+        $pathToCompiled = $cache.'/'.md5($view->getPath().$id).'.compiled.php';
 
         $wp_debug = defined('WP_DEBUG') && WP_DEBUG;
 
