@@ -1,6 +1,6 @@
 # Bladerunner
 
-WordPress plugin for Blade L5 templating
+WordPress plugin for Laravel Blade templating.
 
 To install it to your Composer based WordPress installation:
 
