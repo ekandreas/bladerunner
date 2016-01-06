@@ -19,10 +19,9 @@ class Template
      */
     public function __construct()
     {
-        add_filter('template_include', [$this, 'path']);
-        add_filter('index_template', function () { return 'index.blade.php'; });
-        //add_filter( 'page_template', [ $model, 'getPath' ] );
-        //add_filter( 'bp_template_include', [ $model, 'getPath' ] );
+        add_filter('template_include', [$this, 'path'], 999);
+
+        $this->add_template_filters();
     }
 
     /**
@@ -103,5 +102,36 @@ class Template
         $result .= '/.cache';
 
         return apply_filters('bladerunner/cache', $result);
+    }
+
+    private function add_template_filters()
+    {
+        $types = [
+            'index' => 'index.blade.php',
+            'single' => 'single.blade.php',
+            'page' => 'page.blade.php',
+            '404' => '404.blade.php',
+            'archive' => 'archive.blade.php',
+            'author' => 'author.blade.php',
+            'category' => 'category.blade.php',
+            'tag' => 'tag.blade.php',
+            'taxonomy' => 'taxonomy.blade.php',
+            'date' => 'date.blade.php',
+            'home' => 'home.blade.php',
+            'front-page' => 'front-page.blade.php',
+            'paged' => 'paged.blade.php',
+            'search' => 'search.blade.php',
+            'single' => 'single.blade.php',
+            'singular' => 'singular.blade.php',
+            'attachment' => 'attachment.blade.php',
+        ];
+
+        $types = apply_filters('bladerunner/template_types', $types);
+
+        foreach ($types as $key => $type) {
+            add_filter($key.'_template', function ($type) use ($type) {
+                return "{$type}";
+            }, 99);
+        }
     }
 }
