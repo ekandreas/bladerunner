@@ -1,4 +1,5 @@
 <?php
+
 namespace Bladerunner;
 
 /**
@@ -11,7 +12,7 @@ class Cache
      */
     public function __construct()
     {
-        add_action('save_post', '\Bladerunner\Cache::remove_all_views');
+        add_action('save_post', '\Bladerunner\Cache::removeAllViews');
     }
 
     /**
@@ -25,7 +26,7 @@ class Cache
 
         $result = $wp_debug || $result;
 
-        $result = (!file_exists($path)) || $result;
+        $result = (! file_exists($path)) || $result;
 
         $result = $blade->getCompiler()->isExpired($view->getPath()) || $result;
 
@@ -46,10 +47,10 @@ class Cache
     /**
      * Remove all views in cache folder
      */
-    public static function remove_all_views()
+    public static function removeAllViews()
     {
-        $dir = Cache::path();
-        $files = array_diff(scandir($dir, 1), ['.','..']);
+        $dir   = Cache::path();
+        $files = array_diff(scandir($dir, 1), ['.', '..']);
         foreach ($files as $file) {
             @unlink("$dir/$file");
         }

@@ -7,6 +7,9 @@ namespace Bladerunner;
  */
 class Init
 {
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         add_action('admin_init', '\Bladerunner\Init::checkWriteableUpload');
@@ -51,7 +54,7 @@ class Init
      * Helper function
      * http://php.net/manual/en/function.rmdir.php#114183 - source.
      *
-     * @param $dir
+     * @param  string $dir
      *
      * @return bool
      */
@@ -66,7 +69,7 @@ class Init
     }
 
     /**
-     * Echo admin notice inside wp-admin if cache folder doesnt exist.
+     * Echo admin notice inside wp-admin if cache folder don't exist.
      *
      * @return void
      */
