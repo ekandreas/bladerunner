@@ -50,6 +50,7 @@ class Template
         $cache = self::cache();
         if (!file_exists($cache)) {
             throw new \Exception('Bladerunner: Cache folder does not exist.');
+            return $template;
         }
 
         $search = [$views, '/', '.blade', '.php'];
@@ -58,6 +59,7 @@ class Template
         $file = trim($file, '.');
 
         if (!file_exists(get_stylesheet_directory().'/'.$file.'.blade.php')) {
+            throw new \Exception("Bladerunner: Template file {$file}.blade.php is missing.");
             return $template;
         }
 
