@@ -144,18 +144,16 @@ class Template
 
         $types = apply_filters('bladerunner/template_types', $types);
 
-        if( $types ) {
+        if ($types) {
             foreach ($types as $key => $type) {
                 add_filter($key.'_template', function ($original) use ($type) {
-                    if( locate_template( $type, false ) ) {
+                    if (locate_template($type, false)) {
                         return $type;
-                    }
-                    else {
+                    } else {
                         return $original;
                     }
                 }, 99);
             }
         }
-
     }
 }
