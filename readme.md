@@ -16,8 +16,8 @@ If you don't use a composer based WordPress development environment you can down
 1. Install the library with composer
 2. Make sure the cache-folder is writeable in uploads, eg ../wp-content/uploads/.cache
 3. Activate the plugin
-4. Create a new template file inside your theme, index.blade.php
-5. Code example for the file index.blade.php:
+4. Create a new template file inside your theme, home.blade.php
+5. Code example for the file home.blade.php:
 ```
 Hello World Page rendered at {{ date('Y-m-d H:i:s') }}
 ```
