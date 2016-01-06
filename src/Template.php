@@ -108,6 +108,7 @@ class Template
     {
         $types = [
             'index' => 'index.blade.php',
+            'home' => 'index.blade.php',
             'single' => 'single.blade.php',
             'page' => 'page.blade.php',
             '404' => '404.blade.php',
@@ -117,7 +118,6 @@ class Template
             'tag' => 'tag.blade.php',
             'taxonomy' => 'taxonomy.blade.php',
             'date' => 'date.blade.php',
-            'home' => 'home.blade.php',
             'front-page' => 'front-page.blade.php',
             'paged' => 'paged.blade.php',
             'search' => 'search.blade.php',
