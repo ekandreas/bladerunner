@@ -20,9 +20,17 @@ class Template
     public function __construct()
     {
         add_filter('template_include', [$this, 'path'], 999);
+        add_action('init', [$this, 'init']);
+    }
 
+    /**
+     * Adding {$type}_template to WP
+     */
+    public static function init()
+    {
         $this->addTemplateFilters();
     }
+
 
     /**
      * The hook for template_include to override blade templating.
@@ -136,10 +144,18 @@ class Template
 
         $types = apply_filters('bladerunner/template_types', $types);
 
-        foreach ($types as $key => $type) {
-            add_filter($key.'_template', function ($type) use ($type) {
-                return "{$type}";
-            }, 99);
+        if( $types ) {
+            foreach ($types as $key => $type) {
+                add_filter($key.'_template', function ($original) use ($type) {
+                    if( locate_template( $type, false ) ) {
+                        return $type;
+                    }
+                    else {
+                        return $original;
+                    }
+                }, 99);
+            }
         }
+
     }
 }
