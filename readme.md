@@ -1,5 +1,7 @@
 # Bladerunner
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://packagist.org/packages/ekandreas/bladerunner)
+
 WordPress plugin for Laravel Blade templating.
 
 To install it to your Composer based WordPress installation:

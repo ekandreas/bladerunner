@@ -20,7 +20,7 @@ class Template
     public function __construct()
     {
         add_filter('template_include', [$this, 'path'], 999);
-        add_action('init', [$this, 'init']);
+        add_action('template_redirect', [$this, 'init']);
     }
 
     /**
@@ -63,16 +63,21 @@ class Template
         $search = [$views, '/', '.blade', '.php'];
         $replace = ['', '.', '', ''];
         $file = str_replace($search, $replace, $template);
-        $file = trim($file, '.');
+        $view_file = trim($file, '.');
 
-        if (!file_exists(get_stylesheet_directory().'/'.$file.'.blade.php')) {
-            throw new \Exception("Bladerunner: Template file {$file}.blade.php is missing.");
+        $views = rtrim($views,'/');
+        if(!strstr($template, $views)) {
+            $template = $views.'/'.$template;
+        }
+
+        if (!file_exists($template)) {
+            throw new \Exception("Bladerunner: Template file {$template} is missing.");
             return $template;
         }
 
         $blade = new Blade($views, $cache);
 
-        $view = $blade->view()->make($file);
+        $view = $blade->view()->make($view_file);
 
         $id = (int)get_the_ID();
         $id = $id ? '-'.$id : '';
@@ -146,12 +151,12 @@ class Template
         if ($types) {
             foreach ($types as $key => $type) {
                 add_filter($key.'_template', function ($original) use ($type) {
-                    if (locate_template($type, false)) {
+                    if (locate_template([$type], false)) {
                         return $type;
                     } else {
                         return $original;
                     }
-                }, 99);
+                });
             }
         }
     }
