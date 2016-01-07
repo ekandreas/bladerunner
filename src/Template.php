@@ -65,8 +65,8 @@ class Template
         $file = str_replace($search, $replace, $template);
         $view_file = trim($file, '.');
 
-        $views = rtrim($views,'/');
-        if(!strstr($template, $views)) {
+        $views = rtrim($views, '/');
+        if (!strstr($template, $views)) {
             $template = $views.'/'.$template;
         }
 
