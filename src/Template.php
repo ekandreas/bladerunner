@@ -71,7 +71,7 @@ class Template
         }
 
         if (!file_exists($template)) {
-            throw new \Exception("Bladerunner: Template file {$template} is missing.");
+            throw new \Exception("Bladerunner: Missing template file {$template}");
             return $template;
         }
 
