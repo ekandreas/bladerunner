@@ -75,35 +75,19 @@ class Template
             return $template;
         }
 
-        $blade = new Blade($views, $cache);
+        $this->path = $cache . '/' . $view_file . '.php';
 
-        $view = $blade->view()->make($view_file);
-
-        $id = (int)get_the_ID();
-        $id = $id ? '-'.$id : '';
-
-        $pathToCompiled = $cache.'/'.md5($view->getPath()).$id.'.compiled.php';
-
-        $wp_debug = defined('WP_DEBUG') && WP_DEBUG;
-
-        $expired = $wp_debug || (!file_exists($pathToCompiled)) || $blade->getCompiler()->isExpired($view->getPath());
-
-        if ($expired) {
-            $content = $view->render();
-
-            $compilation_stamp = apply_filters('bladerunner/compilation_stamp', "\n\n<!-- Bladerunner page compiled ".date('Y-m-d H:i:s')." -->\n\n");
-
-            $content .= $compilation_stamp;
-
-            ob_start();
-            echo $content;
-            $content = ob_get_contents();
-            ob_end_clean();
-
-            file_put_contents($pathToCompiled, $content);
+        if (!file_exists($this->path)) {
+            $content = "";
+            $content .= "<?php\n";
+            $content .= "/*\n";
+            $content .= "   This file is rendered with love by Bladerunnner.\n";
+            $content .= "   View file '$view_file', compiled at " . date('Y-m-d H:i:s') . "\n";
+            $content .= "*/\n";
+            $content .= "\$blade = new \Bladerunner\Blade('$views', '$cache');\n";
+            $content .= "echo \$blade->view()->make('$view_file')->render();\n";
+            file_put_contents($this->path, $content);
         }
-
-        $this->path = $pathToCompiled;
 
         return $this->path;
     }
