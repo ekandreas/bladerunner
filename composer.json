@@ -17,6 +17,8 @@
         "illuminate/events": "5.2.*"
     },
     "require-dev": {
-        "frozzare/wp-test-suite": "^1.0"
+        "deployer/deployer":"*",
+        "frozzare/wp-test-suite": "^1.0",
+        "ekandreas/testrunner": "dev-master"
     }
 }

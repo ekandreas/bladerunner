@@ -43,3 +43,22 @@ https://laravel.com/docs/5.2/blade
 * [Code repo at Github](https://github.com/ekandreas/bladerunner)
 * [Support / Issues](https://github.com/ekandreas/bladerunner/issues)
 * [Get a WordPress zip distro](http://bladerunner.aekab.se)
+
+## Tests
+
+### Test requirements:
+* Latest Docker install (not the Boot2Docker)
+* PHP
+* PHP Composer
+
+### Test step by step
+Checkout the components for testing via Composer inside the repo:
+```bash
+composer update
+```
+
+Using Testrunner and Docker the test should be exexuted with a single command:
+```bash
+vendor/bin/dep testrunner
+```
+
