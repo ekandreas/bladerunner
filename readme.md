@@ -48,9 +48,9 @@ https://laravel.com/docs/5.2/blade
 ## Tests
 
 ### Test requirements:
-* Latest Docker install (not the Boot2Docker)
-* PHP
+* Latest Docker install (not the old school Boot2Docker)
 * PHP Composer
+Currently only tested on OSX.
 
 ### Test step by step
 Checkout the components for testing via Composer inside the repo:
@@ -58,7 +58,7 @@ Checkout the components for testing via Composer inside the repo:
 composer update
 ```
 
-Using Testrunner and Docker the test should be exexuted with a single command:
+Using *Testrunner* (required-dev package) and Docker the test should be exexuted with a single command:
 ```bash
 vendor/bin/dep testrunner
 ```
