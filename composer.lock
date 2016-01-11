@@ -522,17 +522,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ekandreas/testrunner.git",
-                "reference": "c9d2c7de1dd98e752e97b54f76794a91c812da0b"
+                "reference": "e31fdb9dc33a8c9bef7a241994aff5bffd348b08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ekandreas/testrunner/zipball/c9d2c7de1dd98e752e97b54f76794a91c812da0b",
-                "reference": "c9d2c7de1dd98e752e97b54f76794a91c812da0b",
+                "url": "https://api.github.com/repos/ekandreas/testrunner/zipball/e31fdb9dc33a8c9bef7a241994aff5bffd348b08",
+                "reference": "e31fdb9dc33a8c9bef7a241994aff5bffd348b08",
                 "shasum": ""
-            },
-            "require": {
-                "deployer/deployer": "^3.0",
-                "phpunit/phpunit": "*"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -542,7 +538,7 @@
                     "email": "andreas@aekab.se"
                 }
             ],
-            "time": "2016-01-09 15:31:33"
+            "time": "2016-01-11 21:19:55"
         },
         {
             "name": "elfet/pure",
