@@ -1,6 +1,7 @@
 # Bladerunner
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://packagist.org/packages/ekandreas/bladerunner)
+[![Build Status](https://travis-ci.org/ekandreas/bladerunner.svg?branch=master)](https://travis-ci.org/ekandreas/bladerunner)
 
 WordPress plugin for Laravel Blade templating.
 
