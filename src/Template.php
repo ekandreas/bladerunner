@@ -15,6 +15,16 @@ class Template
     protected $path;
 
     /**
+     * Stores passed data.
+     *
+     * To pass data use the below example (make sure to run before "template_include" filter):
+     * \Bladerunner\Template::$data['variableName'] = $value;
+     *
+     * @var array
+     */
+    public static $data = array();
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -85,7 +95,7 @@ class Template
             $content .= "   View file '$view_file', compiled at " . date('Y-m-d H:i:s') . "\n";
             $content .= "*/\n";
             $content .= "\$blade = new \Bladerunner\Blade('$views', '$cache');\n";
-            $content .= "echo \$blade->view()->make('$view_file')->render();\n";
+            $content .= "echo \$blade->view()->make('$view_file', json_decode('" . json_encode(self::$data) . "', true))->render();\n";
             file_put_contents($this->path, $content);
         }
 
