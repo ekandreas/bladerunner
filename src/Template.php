@@ -87,7 +87,7 @@ class Template
 
         $this->path = $cache . '/' . $view_file . '.php';
 
-        if (!file_exists($this->path) || !empty(self::$data)) {
+        if (!file_exists($this->path)) {
             $content = "";
             $content .= "<?php\n";
             $content .= "/*\n";
@@ -96,7 +96,7 @@ class Template
             $content .= "*/\n";
             $content .= "\$blade = new \Bladerunner\Blade('$views', '$cache');\n";
             $content .= "echo \$blade->view()->make('$view_file', json_decode('" . json_encode(self::$data) . "', true))->render();\n";
-            file_put_contents($this->path, $content);
+            Cache::storeTemplate($view_file, $content);
         }
 
         return $this->path;

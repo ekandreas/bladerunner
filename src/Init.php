@@ -27,7 +27,12 @@ class Init
         if (!file_exists($cache)) {
             add_action('admin_notices', '\Bladerunner\Init::noticeCreateCache');
         } else {
-            $is_writable = @file_put_contents($cache.'/.folder_writable', 'true');
+            Cache::setPermissions();
+            $is_writable = false;
+            try {
+                file_put_contents($cache.'/folder_writable.php', '<?php echo "folder writable!";');
+                $is_writable = true;
+            } catch(\Exception $ex) {}
             if (!$is_writable) {
                 add_action('admin_notices', '\Bladerunner\Init::noticeWritableCache');
             }

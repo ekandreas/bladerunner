@@ -54,9 +54,34 @@ class Cache
     public static function removeAllViews()
     {
         $dir   = Cache::path();
-        $files = array_diff(scandir($dir, 1), ['.', '..']);
-        foreach ($files as $file) {
-            @unlink("$dir/$file");
+
+        Cache::setPermissions();
+
+        array_map('unlink', glob($dir."/*.php"));
+    }
+
+    /**
+     * Setting cache folder to 775
+     */
+    public static function setPermissions()
+    {
+        $dir   = Cache::path();
+        $permission = apply_filters('bladerunner/cache/permission', 777);
+        try {
+            chmod($dir, $permission);
+        } catch (\Exception $ex) {
+        }
+    }
+
+    public static function storeTemplate($view, $content)
+    {
+        $dir = realpath(Cache::path());
+        try {
+            if (!file_put_contents($dir.'/'.$view.'.php', $content)) {
+                throw new \Exception("Bladerunner: Can't write to cache folder $dir when creating Blade template ($view)");
+            }
+        } catch (\Exception $ex) {
+            throw new \Exception("Bladerunner: Can't write to cache folder $dir when creating Blade template ($view). " . $ex->getMessage());
         }
     }
 }
