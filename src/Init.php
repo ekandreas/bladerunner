@@ -32,7 +32,8 @@ class Init
             try {
                 file_put_contents($cache.'/folder_writable.php', '<?php echo "folder writable!";');
                 $is_writable = true;
-            } catch(\Exception $ex) {}
+            } catch (\Exception $ex) {
+            }
             if (!$is_writable) {
                 add_action('admin_notices', '\Bladerunner\Init::noticeWritableCache');
             }
