@@ -87,7 +87,7 @@ class Template
 
         $this->path = $cache . '/' . $view_file . '.php';
 
-        if (!file_exists($this->path)) {
+        if (!file_exists($this->path) || !empty(self::$data)) {
             $content = "";
             $content .= "<?php\n";
             $content .= "/*\n";
