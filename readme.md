@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://packagist.org/packages/ekandreas/bladerunner)
 [![Build Status](https://travis-ci.org/ekandreas/bladerunner.svg?branch=master)](https://travis-ci.org/ekandreas/bladerunner)
 [![StyleCI](https://styleci.io/repos/48002506/shield)](https://styleci.io/repos/48002506)
-[![Twitter Follow](https://img.shields.io/twitter/follow/shields_io.svg?style=social)](https://twitter.com/intent/user?screen_name=aekabse)
+[![Twitter Follow](https://img.shields.io/twitter/follow/aekabse.svg?style=social)](https://twitter.com/intent/user?screen_name=aekabse)
 
 
 WordPress plugin for Laravel Blade templating.
