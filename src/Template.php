@@ -24,6 +24,7 @@ class Template
     {
         add_filter('template_include', [$this, 'path'], 999);
         add_action('template_redirect', [$this, 'init']);
+        add_filter('get_search_form', [$this, 'getSearchForm'], 999);
     }
 
     /**
@@ -91,6 +92,27 @@ class Template
         }
 
         return $path;
+    }
+
+    /**
+     * Get Blade tempalte for search form when using get_search_form()
+     *
+     * @param  string $searchform Default search form markup
+     *
+     * @return bool               Always returns false (to prevent any other output than the include)
+     */
+    public function getSearchForm($searchform)
+    {
+        if (!file_exists(get_template_directory() . '/searchform.blade.php')) {
+            return $searchform;
+        }
+
+        $bladerunner = new self();
+        $templatePath = $bladerunner->path('searchform.blade.php');
+        include $templatePath;
+        unset($bladerunner);
+
+        return false;
     }
 
     /**
