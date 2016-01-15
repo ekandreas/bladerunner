@@ -8,13 +8,6 @@ namespace Bladerunner;
 class Template
 {
     /**
-     * Saves the path in case of double object instance.
-     *
-     * @var string
-     */
-    protected $path;
-
-    /**
      * Stores passed data.
      *
      * To pass data use the below example (make sure to run before "template_include" filter):
@@ -52,12 +45,10 @@ class Template
      */
     public function path($template)
     {
-        if ($this->path) {
-            return $this->path;
-        }
+        $path = $template;
 
         if (!$template) {
-            return $template;
+            return $path;
         }
 
         $template = apply_filters('bladerunner/get_post_template', $template);
@@ -85,9 +76,9 @@ class Template
             return $template;
         }
 
-        $this->path = $cache . '/' . $view_file . '.php';
+        $path = $cache . '/' . $view_file . '.php';
 
-        if (!file_exists($this->path)) {
+        if (!file_exists($path)) {
             $content = "";
             $content .= "<?php\n";
             $content .= "/*\n";
@@ -99,7 +90,7 @@ class Template
             Cache::storeTemplate($view_file, $content);
         }
 
-        return $this->path;
+        return $path;
     }
 
     /**
