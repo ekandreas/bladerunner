@@ -54,6 +54,28 @@ Inside your view file you will be able to access the passed data like so:
 {{ $variableName }}
 ```
 
+## Hooks & Filters
+Bladerunner continuously implements filters and hooks to modify values and processes.
+
+### Hooks
+...
+
+### Filters
+Modify Bladerunners cache folder path, default ../wp-content/uploads/.cache
+```php
+add_filter('bladerunner/cache/path', function() {
+	return '/my/path/to/cache';
+});
+```
+
+Permission settings to cache folder, default 777
+```php
+add_filter('bladerunner/cache/permission', function() {
+	return 644;
+});
+```
+
+
 ## Links
 * [Bladerunner site with documentation and distro](http://bladerunner.aekab.se)
 * [Docs Laravel Blade v5.2](https://laravel.com/docs/5.2/blade)

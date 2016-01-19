@@ -45,7 +45,7 @@ class Cache
         $result = wp_upload_dir()['basedir'];
         $result .= '/.cache';
         $result = realpath($result);
-        return apply_filters('bladerunner/cache_path', $result);
+        return apply_filters('bladerunner/cache/path', $result);
     }
 
     /**
