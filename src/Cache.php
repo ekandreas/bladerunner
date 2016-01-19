@@ -55,7 +55,7 @@ class Cache
     {
         $dir   = Cache::path();
 
-        //Cache::setPermissions();
+        Cache::setPermissions();
 
         array_map('unlink', glob($dir."/*.php"));
     }
@@ -68,7 +68,7 @@ class Cache
         $dir   = Cache::path();
         $permission = apply_filters('bladerunner/cache/permission', 777);
         try {
-            chmod($dir, $permission);
+            chmod($dir, octdec($permission));
         } catch (\Exception $ex) {
         }
     }
