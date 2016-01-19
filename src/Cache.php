@@ -44,7 +44,7 @@ class Cache
     {
         $result = wp_upload_dir()['basedir'];
         $result .= '/.cache';
-
+        $result = realpath($result);
         return apply_filters('bladerunner/cache_path', $result);
     }
 
@@ -55,7 +55,7 @@ class Cache
     {
         $dir   = Cache::path();
 
-        Cache::setPermissions();
+        //Cache::setPermissions();
 
         array_map('unlink', glob($dir."/*.php"));
     }
@@ -75,7 +75,7 @@ class Cache
 
     public static function storeTemplate($view, $content)
     {
-        $dir = realpath(Cache::path());
+        $dir = Cache::path();
         try {
             if (!file_put_contents($dir.'/'.$view.'.php', $content)) {
                 throw new \Exception("Bladerunner: Can't write to cache folder $dir when creating Blade template ($view)");
