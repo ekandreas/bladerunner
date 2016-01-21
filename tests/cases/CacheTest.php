@@ -4,7 +4,7 @@ class CacheTest extends WP_UnitTestCase
 {
     public function testPath()
     {
-        $this->assertContains('/.cache', \Bladerunner\Cache::path());
+        $this->assertStringEndsWith('/.cache', \Bladerunner\Cache::path());
     }
 
     public function testRemoveAllViews()
