@@ -14,7 +14,7 @@ class CacheTest extends WP_UnitTestCase
 
     public function testConstructor()
     {
-        $cache = new EkAndreas\Bladerunner\Cache();
+        $cache = new \Bladerunner\Cache();
         $this->assertInstanceOf('\Bladerunner\Cache', $cache);
     }
 }
