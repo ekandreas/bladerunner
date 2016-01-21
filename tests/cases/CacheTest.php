@@ -4,17 +4,17 @@ class CacheTest extends WP_UnitTestCase
 {
     public function testPath()
     {
-        $this->assertContains('/.cache', EkAndreas\Bladerunner\Cache::path());
+        $this->assertContains('/.cache', \Bladerunner\Cache::path());
     }
 
     public function testRemoveAllViews()
     {
-        $this->assertNull(EkAndreas\Bladerunner\Cache::removeAllViews());
+        $this->assertNull(\Bladerunner\Cache::removeAllViews());
     }
 
     public function testConstructor()
     {
         $cache = new EkAndreas\Bladerunner\Cache();
-        $this->assertInstanceOf('EkAndreas\Bladerunner\Cache', $cache);
+        $this->assertInstanceOf('\Bladerunner\Cache', $cache);
     }
 }
