@@ -15,23 +15,16 @@ class Template
      *
      * @var array
      */
-    public static $data = array();
+    public $data = [];
 
     /**
      * Constructor.
      */
     public function __construct()
     {
-        add_filter('template_include', [$this, 'path'], 999);
-        add_action('template_redirect', [$this, 'init']);
-    }
-
-    /**
-     * Adding {$type}_template to WP
-     */
-    public function init()
-    {
-        $this->addTemplateFilters();
+        add_filter('template_include', [$this, 'templateFilter'], 999);
+        add_action('template_redirect', [$this, 'addPageTemplateFilters']);
+        $this->data = apply_filters('bladerunner/templates/data', [] );
     }
 
     /**
@@ -43,7 +36,7 @@ class Template
      *
      * @return string
      */
-    public function path($template)
+    public function templateFilter($template)
     {
         $path = $template;
 
@@ -51,13 +44,13 @@ class Template
             return $path;
         }
 
-        $template = apply_filters('bladerunner/get_post_template', $template);
+        $template = apply_filters('bladerunner/template/post', $template);
 
         $views = get_stylesheet_directory();
 
         $cache = self::cache();
         if (!file_exists($cache)) {
-            throw new \Exception('Bladerunner: Cache folder does not exist.');
+            trigger_error("Bladerunner: Cache folder {$cache} does not exist.", E_WARNING);
             return $template;
         }
 
@@ -72,7 +65,7 @@ class Template
         }
 
         if (!file_exists($template)) {
-            throw new \Exception("Bladerunner: Missing template file {$template}");
+            trigger_error("Bladerunner: Missing template file {$template}", E_WARNING);
             return $template;
         }
 
@@ -109,7 +102,7 @@ class Template
     /**
      * Add template filters.
      */
-    private function addTemplateFilters()
+    public function addPageTemplateFilters()
     {
         $types = [
             'index'      => 'index.blade.php',
@@ -131,7 +124,7 @@ class Template
             'attachment' => 'attachment.blade.php',
         ];
 
-        $types = apply_filters('bladerunner/template_types', $types);
+        $types = apply_filters('bladerunner/template/types', $types);
 
         if ($types) {
             foreach ($types as $key => $type) {

@@ -44,14 +44,19 @@ https://laravel.com/docs/5.2/blade
 ## Pass data to template
 A simple way to pass data to a view before it's loaded.
 
-Run the below code (and change variableName and $value) before the template_include filter (or in the template_include filter with higher priority than 999) to pass data to the soon to be loaded view.
+Set the filter ``bladerunner/templates/data`` before running a template to pass custom data to the template, eg:
 ```
-\Bladerunner\Template::$data['variableName'] = $value;
+$data = [
+	'this' => 'that',
+	'other' => 'perhaps',
+];
+add_filter('bladerunner/templates/data', compact('data'));
 ```
 
 Inside your view file you will be able to access the passed data like so:
 ```
-{{ $variableName }}
+{{ $data['this'] }}
+{{ $data['other'] }}
 ```
 
 ## Hooks & Filters
