@@ -24,7 +24,7 @@ class Template
     {
         add_filter('template_include', [$this, 'templateFilter'], 999);
         add_action('template_redirect', [$this, 'addPageTemplateFilters']);
-        $this->data = apply_filters('bladerunner/templates/data', [] );
+        $this->data = apply_filters('bladerunner/templates/data', []);
     }
 
     /**
