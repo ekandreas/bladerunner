@@ -67,9 +67,11 @@ class Cache
     {
         $dir   = Cache::path();
         $permission = apply_filters('bladerunner/cache/permission', 777);
-        try {
-            chmod($dir, octdec($permission));
-        } catch (\Exception $ex) {
+        if( $permission ) {
+            try {
+                @chmod($dir, octdec($permission));
+            } catch (\Exception $ex) {
+            }
         }
     }
 
