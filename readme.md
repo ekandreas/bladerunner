@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://packagist.org/packages/ekandreas/bladerunner)
 [![Build Status](https://travis-ci.org/ekandreas/bladerunner.svg?branch=master)](https://travis-ci.org/ekandreas/bladerunner)
 [![StyleCI](https://styleci.io/repos/48002506/shield)](https://styleci.io/repos/48002506)
+[![GitHub release](https://img.shields.io/github/release/ekandreas/bladerunner.svg)](http://bladerunner.aekab.se/bladerunner.zip)
 [![Twitter Follow](https://img.shields.io/twitter/follow/aekabse.svg?style=social)](https://twitter.com/intent/user?screen_name=aekabse)
 
 
@@ -61,7 +62,7 @@ add_filter('bladerunner/cache/permission', function() {
 	return 644;
 });
 ```
-If you don't want Bladerunner to check for permissions then set the return to null, eg:
+If you don't want Bladerunner to check for permissions form cache folder then set the return to null, eg:
 ```php
 add_filter('bladerunner/cache/permission', '__return_null');
 ```
