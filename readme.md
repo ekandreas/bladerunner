@@ -61,6 +61,10 @@ add_filter('bladerunner/cache/permission', function() {
 	return 644;
 });
 ```
+If you don't want Bladerunner to check for permissions then set the return to null, eg:
+```php
+add_filter('bladerunner/cache/permission', '__return_null');
+```
 
 #### Template Data Filter
 A simple way to pass data to a given view before it's loaded.
