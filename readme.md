@@ -41,24 +41,6 @@ https://laravel.com/docs/5.2/blade
 * Your views must be placed within your theme folder.
 * Your templates must have .blade.php extension.
 
-## Pass data to template
-A simple way to pass data to a view before it's loaded.
-
-Set the filter ``bladerunner/templates/data`` before running a template to pass custom data to the template, eg:
-```
-$data = [
-	'this' => 'that',
-	'other' => 'perhaps',
-];
-add_filter('bladerunner/templates/data', compact('data'));
-```
-
-Inside your view file you will be able to access the passed data like so:
-```
-{{ $data['this'] }}
-{{ $data['other'] }}
-```
-
 ## Hooks & Filters
 Bladerunner continuously implements filters and hooks to modify values and processes.
 
@@ -80,6 +62,25 @@ add_filter('bladerunner/cache/permission', function() {
 });
 ```
 
+#### Template Data Filter
+A simple way to pass data to a given view before it's loaded.
+
+Set the filter ``bladerunner/templates/data/{view}`` before running a template to pass custom data to the template, eg:
+```
+$data = [
+	'this' => 'that',
+	'other' => 'perhaps',
+];
+add_filter('bladerunner/templates/data/single', $data);
+```
+
+Inside your "single.blade.php" / view file you will be able to access the passed data like so:
+```
+{{ $data['this'] }}
+{{ $data['other'] }}
+```
+
+Default value for data is an empty array.
 
 ## Links
 * [Bladerunner site with documentation and distro](http://bladerunner.aekab.se)

@@ -8,23 +8,12 @@ namespace Bladerunner;
 class Template
 {
     /**
-     * Stores passed data.
-     *
-     * To pass data use the below example (make sure to run before "template_include" filter):
-     * \Bladerunner\Template::$data['variableName'] = $value;
-     *
-     * @var array
-     */
-    public $data = [];
-
-    /**
      * Constructor.
      */
     public function __construct()
     {
         add_filter('template_include', [$this, 'templateFilter'], 999);
         add_action('template_redirect', [$this, 'addPageTemplateFilters']);
-        $this->data = apply_filters('bladerunner/templates/data', []);
     }
 
     /**
@@ -79,7 +68,8 @@ class Template
             $content .= "   View file '$view_file', compiled at " . date('Y-m-d H:i:s') . "\n";
             $content .= "*/\n";
             $content .= "\$blade = new \Bladerunner\Blade('$views', '$cache');\n";
-            $content .= "echo \$blade->view()->make('$view_file', json_decode('" . json_encode(self::$data) . "', true))->render();\n";
+            $content .= "\$view_data = apply_filters('bladerunner/templates/data/$view_file', []);\n";
+            $content .= "echo \$blade->view()->make('$view_file', \$view_data)->render();\n";
             Cache::storeTemplate($view_file, $content);
         }
 
