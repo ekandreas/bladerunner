@@ -1,6 +1,6 @@
 # Bladerunner
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://packagist.org/packages/ekandreas/bladerunner)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ekandreas/bladerunner)
 [![Build Status](https://travis-ci.org/ekandreas/bladerunner.svg?branch=master)](https://travis-ci.org/ekandreas/bladerunner)
 [![StyleCI](https://styleci.io/repos/48002506/shield)](https://styleci.io/repos/48002506)
 [![GitHub release](https://img.shields.io/github/release/ekandreas/bladerunner.svg)](http://bladerunner.aekab.se/bladerunner.zip)
@@ -41,6 +41,31 @@ https://laravel.com/docs/5.2/blade
 * Your cached views will always be stored in your wp upload folder, .cache.
 * Your views must be placed within your theme folder.
 * Your templates must have .blade.php extension.
+
+## Template helper
+There is a template helper function named "bladerunner", defined globally to use in standard WordPress templates.
+
+Example:
+You want to create a 404-template and don't want to use the .blade.php extension to the template file.
+
+* Create a 404.php in the theme root.
+* Add the following code to the template:
+```
+<?php
+    bladerunner('views.pages.404');
+```
+* In the folder "views/pages", create a blade template "404.blade.php".
+
+You can pass any data with the global "bladerunner" function like so,
+```
+<?php
+    bladerunner('views.pages.404', ['module'=>$module]);
+```
+or use compact, eg:
+```
+<?php
+    bladerunner('views.pages.404', compact('module'));
+```
 
 ## Hooks & Filters
 Bladerunner continuously implements filters and hooks to modify values and processes.
