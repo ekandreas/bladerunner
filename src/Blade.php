@@ -148,8 +148,16 @@ class Blade
         // instance to pass into the engine so it can compile the views properly.
         $this->container->singleton('blade.compiler', function ($app) use ($me) {
             $cache = $me->cachePath;
-
-            return new BladeCompiler($app['files'], $cache);
+            $compiler = new BladeCompiler($app['files'], $cache);
+            $extensions = apply_filters('bladerunner/extend', []);
+            if ($extensions && is_array($extensions)) {
+                foreach ($extensions as $key => $extension) {
+                    $compiler->extend(function ($value) use ($key, $extension) {
+                        return preg_replace($key, $extension, $value);
+                    });
+                }
+            }
+            return $compiler;
         });
 
         $resolver->register('blade', function () use ($app) {
