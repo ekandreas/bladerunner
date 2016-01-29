@@ -94,16 +94,31 @@ add_filter('bladerunner/cache/permission', '__return_null');
 
 #### Custom extensions
 If you are comfortable with regular expressions and want to add your own extensions to your templates use the filter ``bladerunner/extend``.
-Note! It takes one *array* as parameter.
+Note! It takes one *array* as parameter and requires two keys; "pattern" and "replace".
 
-Use the *key* as pattern and the replacement as the *value*. Eg:
 ```php
+$extensions[] = [
+	'pattern' => '...',
+	'replace' => '...',
+];
+```
+
+Use the filter as possible way to add your own custom extensions.
+
+In this example we want to add ``@mysyntax`` as a custom extension.
+```php
+/*
+ * Add custom extension @mysyntax to Bladerunner
+ */
 add_filter('bladerunner/extend', function($extensions) {
-    $extensions['/(\s*)@mysyntax(\s*)/'] = '$1<?php echo "MYSYNTAX COMPILED!"; ?>$2';
+    $extensions[] = [
+    	'pattern' => '/(\s*)@mysyntax(\s*)/',
+    	'replace' => '$1<?php echo "MYSYNTAX COMPILED!"; ?>$2',
+    ];
     return $extensions;
 });
 ```
-Then use your new syntax inside a blade template like so:
+Then use your new syntax inside a WordPress blade template like so:
 ```php
 	@mysyntax
 ```
