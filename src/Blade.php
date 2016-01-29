@@ -149,14 +149,16 @@ class Blade
         $this->container->singleton('blade.compiler', function ($app) use ($me) {
             $cache = $me->cachePath;
             $compiler = new BladeCompiler($app['files'], $cache);
-            $extensions = apply_filters('bladerunner/extend', []);
+
+            $extensions = CompilerExtensions::getAllExtensions();
             if ($extensions && is_array($extensions)) {
-                foreach ($extensions as $key => $extension) {
-                    $compiler->extend(function ($value) use ($key, $extension) {
-                        return preg_replace($key, $extension, $value);
+                foreach ($extensions as $extension) {
+                    $compiler->extend(function ($value) use ($extension) {
+                        return preg_replace($extension->pattern, $extension->replace, $value);
                     });
                 }
             }
+
             return $compiler;
         });
 
