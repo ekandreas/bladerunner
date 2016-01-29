@@ -25,7 +25,7 @@ If you don't use a composer based WordPress development environment you can down
 3. Activate the plugin
 4. Create a new template file inside your theme, home.blade.php
 5. Code example for the file home.blade.php:
-```
+```twig
 Hello World Page rendered at {{ date('Y-m-d H:i:s') }}
 ```
 6. I you got the date to render a real date then you can use all the Laravel 5 Blade syntax inside your theme templates!
@@ -50,19 +50,19 @@ You want to create a 404-template and don't want to use the .blade.php extension
 
 * Create a 404.php in the theme root.
 * Add the following code to the template:
-```
+```php
 <?php
     bladerunner('views.pages.404');
 ```
 * In the folder "views/pages", create a blade template "404.blade.php".
 
 You can pass any data with the global "bladerunner" function like so,
-```
+```php
 <?php
     bladerunner('views.pages.404', ['module'=>$module]);
 ```
 or use compact, eg:
-```
+```php
 <?php
     bladerunner('views.pages.404', compact('module'));
 ```
@@ -114,7 +114,7 @@ We will soon add more WordPress extenstions to the Bladerunner engine. Please gi
 A simple way to pass data to a given view before it's loaded.
 
 Set the filter ``bladerunner/templates/data/{view}`` before running a template to pass custom data to the template, eg:
-```
+```php
 $data = [
 	'this' => 'that',
 	'other' => 'perhaps',
@@ -123,7 +123,7 @@ add_filter('bladerunner/templates/data/single', $data);
 ```
 
 Inside your "single.blade.php" / view file you will be able to access the passed data like so:
-```
+```php
 {{ $data['this'] }}
 {{ $data['other'] }}
 ```
