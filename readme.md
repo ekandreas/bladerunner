@@ -19,18 +19,26 @@ Your theme still needs an index.php due to WordPress basic functionality. When r
 
 If you don't use a composer based WordPress development environment you can download the latest distributed plugin at [Bladerunner site http://bladerunner.aekab.se](http://bladerunner.aekab.se) and install it the common way with zip upload to WordPress via wp-admin.
 
+## Coming release 1.2
+**Note!**
+In version 1.2 we will remove the WordPress template interference and require all views to be loaded via standard WordPress templates.
+
 ## Hello World
 1. Install the library with composer
 2. Make sure the cache-folder is writeable in uploads, eg ../wp-content/uploads/.cache
 3. Activate the plugin
-4. Create a new template file inside your theme, home.blade.php
-5. Code example for the file home.blade.php:
+4. Create a view, eg:
 ```twig
+<!-- view file: views/pages/index.blade.php -->
 Hello World Page rendered at {{ date('Y-m-d H:i:s') }}
 ```
-6. I you got the date to render a real date then you can use all the Laravel 5 Blade syntax inside your theme templates!
+5. In your index.php, add a global call for the view created, eg:
+```php
+<?php
+    bladerunner('views.pages.index')
+```
 
-https://laravel.com/docs/5.2/blade
+[https://laravel.com/docs/5.2/blade](https://laravel.com/docs/5.2/blade)
 
 ## Cache
 * If WP_DEBUG is set and true then templates always will be rendered and updated.
@@ -40,7 +48,7 @@ https://laravel.com/docs/5.2/blade
 ## Directories
 * Your cached views will always be stored in your wp upload folder, .cache.
 * Your views must be placed within your theme folder.
-* Your templates must have .blade.php extension.
+* Your views must have .blade.php extension.
 
 ## Template helper
 There is a template helper function named "bladerunner", defined globally to use in standard WordPress templates.
