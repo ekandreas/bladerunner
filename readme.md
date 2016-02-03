@@ -19,9 +19,13 @@ Your theme still needs an index.php due to WordPress basic functionality. When r
 
 If you don't use a composer based WordPress development environment you can download the latest distributed plugin at [Bladerunner site http://bladerunner.aekab.se](http://bladerunner.aekab.se) and install it the common way with zip upload to WordPress via wp-admin.
 
-## Coming release 1.2
-**Note!**
-In version 1.2 we will remove the WordPress template interference and require all views to be loaded via standard WordPress templates.
+## Release 1.2
+**The template handler before Bladerunner v1.2 is removed!**
+From now on load templates with the global ``bladerunner()`` in each WordPress template.
+If you still need the old template handler set the filter ``bladerunner/templates/handler`` with true. Example:
+```php
+add_filter('bladerunner/templates/handler', '__return_true'); 
+```
 
 ## Hello World
 1. Install the library with composer

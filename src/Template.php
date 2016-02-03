@@ -12,8 +12,11 @@ class Template
      */
     public function __construct()
     {
-        add_filter('template_include', [$this, 'templateFilter'], 999);
-        add_action('template_redirect', [$this, 'addPageTemplateFilters']);
+        // as for version 1.2 template handler is removed from Bladerunner.
+        if (apply_filters('bladerunner/templates/handler', false)) {
+            add_filter('template_include', [$this, 'templateFilter'], 999);
+            add_action('template_redirect', [$this, 'addPageTemplateFilters']);
+        }
     }
 
     /**

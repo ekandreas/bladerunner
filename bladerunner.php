@@ -3,7 +3,7 @@
 Plugin Name:        Bladerunner
 Plugin URI:         http://bladerunner.aekab.se
 Description:        Laravel Blade template engine for WordPress
-Version:            1.1
+Version:            1.2
 Author:             Andreas Ek
 Author URI:         http://www.aekab.se/
 License:            MIT License
