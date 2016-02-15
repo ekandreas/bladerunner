@@ -8,21 +8,13 @@ namespace Bladerunner;
 class Init
 {
     /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        add_action('admin_init', '\Bladerunner\Init::checkWriteableUpload');
-    }
-
-    /**
      * Check if the cache folder exists and is writable and assigns admin notice if not.
      *
      * @return void
      */
     public static function checkWriteableUpload()
     {
-        $cache = Template::cache();
+        $cache = Cache::path();
 
         if (!file_exists($cache)) {
             add_action('admin_notices', '\Bladerunner\Init::noticeCreateCache');
@@ -45,7 +37,7 @@ class Init
      */
     public static function createCacheDirectory()
     {
-        wp_mkdir_p(Template::cache());
+        wp_mkdir_p(Cache::path());
     }
 
     /**
@@ -53,7 +45,7 @@ class Init
      */
     public static function deleteCacheDirectory()
     {
-        self::deleteDirectory(Template::cache());
+        self::deleteDirectory(Cache::path());
     }
 
     /**
@@ -81,7 +73,7 @@ class Init
      */
     public static function noticeCreateCache()
     {
-        $cache = Template::cache();
+        $cache = Cache::path();
         echo '<div class="error"> ';
         echo '<p><strong>Cache folder missing</strong></p>';
         echo '<p>Bladerunner needs a .cache -folder in uploads. Please create the folder and make it writable!</p>';
@@ -96,7 +88,7 @@ class Init
      */
     public static function noticeWritableCache()
     {
-        $cache = Template::cache();
+        $cache = Cache::path();
         echo '<div class="error"> ';
         echo '<p><strong>Cache not writable</strong></p>';
         echo '<p>Bladerunner cache folder .cache in uploads not writable. Please make the folder writable for your web server!</p>';

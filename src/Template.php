@@ -8,18 +8,6 @@ namespace Bladerunner;
 class Template
 {
     /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        // as for version 1.2 template handler is removed from Bladerunner.
-        if (apply_filters('bladerunner/templates/handler', false)) {
-            add_filter('template_include', [$this, 'templateFilter'], 999);
-            add_action('template_redirect', [$this, 'addPageTemplateFilters']);
-        }
-    }
-
-    /**
      * The hook for template_include to override blade templating.
      *
      * @param  string $template
@@ -40,7 +28,7 @@ class Template
 
         $views = get_stylesheet_directory();
 
-        $cache = self::cache();
+        $cache = Cache::path();
         if (!file_exists($cache)) {
             trigger_error("Bladerunner: Cache folder {$cache} does not exist.", E_WARNING);
             return $template;
@@ -77,19 +65,6 @@ class Template
         }
 
         return $path;
-    }
-
-    /**
-     * Gets the cache folder for Bladerunner.
-     *
-     * @return string
-     */
-    public static function cache()
-    {
-        $result = wp_upload_dir()['basedir'];
-        $result .= '/.cache';
-
-        return apply_filters('bladerunner/cache', $result);
     }
 
     /**

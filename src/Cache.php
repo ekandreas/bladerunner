@@ -8,14 +8,6 @@ namespace Bladerunner;
 class Cache
 {
     /**
-     * Add WordPress hooks.
-     */
-    public function __construct()
-    {
-        add_action('save_post', '\Bladerunner\Cache::removeAllViews');
-    }
-
-    /**
      * Return true if compilation expired.
      *
      * @param \Bladerunner\Blade       $blade
