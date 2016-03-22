@@ -26,7 +26,7 @@ class Template
 
         $template = apply_filters('bladerunner/template/post', $template);
 
-        $views = get_stylesheet_directory();
+        $views = apply_filters('bladerunner/template/bladepath', get_stylesheet_directory());
 
         $cache = Cache::path();
         if (!file_exists($cache)) {
