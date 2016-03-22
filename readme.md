@@ -103,6 +103,10 @@ If you don't want Bladerunner to check for permissions form cache folder then se
 ```php
 add_filter('bladerunner/cache/permission', '__return_null');
 ```
+If you wan't to customize the base path where you have your views stored, use:
+```php
+add_filter('bladerunner/template/bladepath', function ($path) { return $path . '/views'; });
+```
 
 #### Custom extensions
 If you are comfortable with regular expressions and want to add your own extensions to your templates use the filter ``bladerunner/extend``.
