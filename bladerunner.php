@@ -3,7 +3,7 @@
 Plugin Name:        Bladerunner
 Plugin URI:         http://bladerunner.aekab.se
 Description:        Laravel Blade template engine for WordPress
-Version:            1.3.1
+Version:            1.3.2
 Author:             Andreas Ek
 Author URI:         http://www.aekab.se/
 License:            MIT License
@@ -12,6 +12,9 @@ License URI:        http://opensource.org/licenses/MIT
 
 if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
+}
+elseif (defined('WP_CONTENT_DIR') && file_exists( WP_CONTENT_DIR . '/vendor/autoload.php')) {
+    require_once WP_CONTENT_DIR . '/vendor/autoload.php';
 }
 
 require_once __DIR__.'/src/Cache.php';
