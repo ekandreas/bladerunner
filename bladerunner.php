@@ -12,8 +12,7 @@ License URI:        http://opensource.org/licenses/MIT
 
 if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
-}
-elseif (defined('WP_CONTENT_DIR') && file_exists( WP_CONTENT_DIR . '/vendor/autoload.php')) {
+} elseif (defined('WP_CONTENT_DIR') && file_exists(WP_CONTENT_DIR . '/vendor/autoload.php')) {
     require_once WP_CONTENT_DIR . '/vendor/autoload.php';
 }
 
