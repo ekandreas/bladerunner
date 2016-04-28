@@ -5,8 +5,8 @@ namespace Bladerunner;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Engines\CompilerEngine;
+use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Engines\PhpEngine;
 use Illuminate\View\Factory;
@@ -147,6 +147,7 @@ class Blade
         // this case will be the Blade compiler, so we'll first create the compiler
         // instance to pass into the engine so it can compile the views properly.
         $this->container->singleton('blade.compiler', function ($app) use ($me) {
+
             $cache = $me->cachePath;
             $compiler = new BladeCompiler($app['files'], $cache);
 
