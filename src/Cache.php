@@ -20,6 +20,10 @@ class Cache
 
         $wp_debug = defined('WP_DEBUG') && WP_DEBUG;
 
+        if ($wp_debug) {
+            return true;
+        }
+        
         $result = $wp_debug || $result;
 
         $result = (! file_exists($path)) || $result;

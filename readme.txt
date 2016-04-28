@@ -3,7 +3,7 @@ Contributors: ekandreas
 Tags: Blade,templates,development,laravel
 Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 1.3.2
+Stable tag: 1.4
 License: MIT
 
 WordPress plugin for Blade L5 templating
