@@ -17,4 +17,3 @@ if (!function_exists('bladerunner')) {
         echo $blade->view()->make($view, $data)->render();
     }
 }
-https://www.google.com/search?q=Atletico%20Madrid
