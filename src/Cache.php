@@ -18,7 +18,7 @@ class Cache
     {
         $result = false;
 
-        $wp_debug = defined('WP_DEBUG') && WP_DEBUG;
+        $wp_debug = defined('WP_DEBUG') && true === WP_DEBUG;
 
         if ($wp_debug) {
             return true;
