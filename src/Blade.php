@@ -6,7 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Engines\CompilerEngine;
-use Illuminate\View\Compilers\BladeCompiler;
+//use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Engines\PhpEngine;
 use Illuminate\View\Factory;
@@ -149,7 +149,7 @@ class Blade
         $this->container->singleton('blade.compiler', function ($app) use ($me) {
 
             $cache = $me->cachePath;
-            $compiler = new BladeCompiler($app['files'], $cache);
+            $compiler = new WPCompiler($app['files'], $cache);
 
             $extensions = CompilerExtensions::getAllExtensions();
             if ($extensions && is_array($extensions)) {

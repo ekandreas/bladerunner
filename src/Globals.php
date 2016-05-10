@@ -12,6 +12,15 @@ if (!function_exists('bladerunner')) {
      */
     function bladerunner($view, $data = [])
     {
+        if (defined('WP_DEBUG') && true === WP_DEBUG) {
+            $files = glob(\Bladerunner\Cache::path().'/*');
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    @unlink($file);
+                }
+            }
+        }
+
         $bladepath = apply_filters('bladerunner/template/bladepath', get_stylesheet_directory());
         $blade = new \Bladerunner\Blade($bladepath, \Bladerunner\Cache::path());
         echo $blade->view()->make($view, $data)->render();
