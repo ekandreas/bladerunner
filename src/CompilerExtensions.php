@@ -1,4 +1,5 @@
 <?php
+
 namespace Bladerunner;
 
 /**
@@ -6,14 +7,28 @@ namespace Bladerunner;
  */
 class CompilerExtensions
 {
+    /**
+     * Compiler extensions.
+     *
+     * @var array
+     */
     protected $extensions = [];
 
+    /**
+     * Get all compiler extensions.
+     *
+     * @return array
+     */
     public static function getAllExtensions()
     {
-        $result = new CompilerExtensions();
+        $result = new self();
+
         return $result->extensions;
     }
 
+    /**
+     * CompilerExtensions constructor.
+     */
     public function __construct()
     {
         $this->addStandard();
@@ -21,8 +36,7 @@ class CompilerExtensions
     }
 
     /**
-     * Adds WordPress specific extensions
-     * @return void
+     * Adds WordPress specific extensions.
      */
     public function addStandard()
     {
@@ -32,8 +46,7 @@ class CompilerExtensions
     }
 
     /**
-     * Adds custom extensions via WP filter
-     * @return void
+     * Adds custom extensions via WP filter.
      */
     public function addCustom()
     {
@@ -54,11 +67,17 @@ class CompilerExtensions
         }
     }
 
+    /**
+     * Magic get values.
+     *
+     * @param string $name
+     */
     public function __get($name)
     {
-        if ($name=='extensions') {
+        if ($name == 'extensions') {
             return $extensions;
         }
+
         return null;
     }
 }

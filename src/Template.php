@@ -10,7 +10,7 @@ class Template
     /**
      * The hook for template_include to override blade templating.
      *
-     * @param  string $template
+     * @param string $template
      *
      * @throws \Exception
      *
@@ -31,6 +31,7 @@ class Template
         $cache = Cache::path();
         if (!file_exists($cache)) {
             trigger_error("Bladerunner: Cache folder {$cache} does not exist.", E_WARNING);
+
             return $template;
         }
 
@@ -46,17 +47,18 @@ class Template
 
         if (!file_exists($template)) {
             trigger_error("Bladerunner: Missing template file {$template}", E_WARNING);
+
             return $template;
         }
 
-        $path = $cache . '/' . $view_file . '.php';
+        $path = $cache.'/'.$view_file.'.php';
 
         if (!file_exists($path)) {
-            $content = "";
+            $content = '';
             $content .= "<?php\n";
             $content .= "/*\n";
             $content .= "   This file is rendered with love by Bladerunnner.\n";
-            $content .= "   View file '$view_file', compiled at " . date('Y-m-d H:i:s') . "\n";
+            $content .= "   View file '$view_file', compiled at ".date('Y-m-d H:i:s')."\n";
             $content .= "*/\n";
             $content .= "\$blade = new \Bladerunner\Blade('$views', '$cache');\n";
             $content .= "\$view_data = apply_filters('bladerunner/templates/data/$view_file', []);\n";

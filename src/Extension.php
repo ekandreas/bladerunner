@@ -1,23 +1,29 @@
 <?php
+
 namespace Bladerunner;
 
 /**
- * A single extention
+ * A single extention.
  */
 class Extension
 {
     /**
+     * Extension pattern.
+     *
      * @var string
      */
     protected $pattern;
 
     /**
-     * @var string or callable
+     * Replace with.
+     *
+     * @var string|callable
      */
     protected $replace;
 
     /**
-     * Setting up this extension from an array with specific parameters
+     * Setting up this extension from an array with specific parameters.
+     *
      * @param array $extension Expected keys "pattern" and "replace" to create an extension
      */
     public function __construct(array $extension)
@@ -26,9 +32,9 @@ class Extension
     }
 
     /**
-     * Just a wrapper to going through the array given
-     * @param  array  $extension
-     * @return void
+     * Just a wrapper to going through the array given.
+     *
+     * @param array $extension
      */
     private function setup(array $extension)
     {
@@ -44,8 +50,10 @@ class Extension
     }
 
     /**
-     * Expose the keys pattern and replace
-     * @param  string $name Can be "pattern" or "replace", otherwise it will return null
+     * Expose the keys pattern and replace.
+     *
+     * @param string $name Can be "pattern" or "replace", otherwise it will return null
+     *
      * @return string|null
      */
     public function __get($name)
@@ -56,7 +64,7 @@ class Extension
             } else {
                 return $this->pattern;
             }
-        } elseif ($name=='replace') {
+        } elseif ($name == 'replace') {
             if (is_callable($this->replace)) {
                 return call_user_func($this->replace);
             } else {
@@ -68,16 +76,17 @@ class Extension
     }
 
     /**
-     * Setters accepting the keys "pattern" or "replace"
-     * @param string $name  Can be "pattern" or "replace"
+     * Setters accepting the keys "pattern" or "replace".
+     *
+     * @param string $name Can be "pattern" or "replace"
      * @param void
      */
     public function __set($name, $value)
     {
         if ($name == 'pattern') {
             $this->pattern = $value;
-        } elseif ($name=='replace') {
-            $this->replace = $replace;
+        } elseif ($name == 'replace') {
+            $this->replace = $value;
         }
     }
 }
