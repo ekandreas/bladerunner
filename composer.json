@@ -1,21 +1,21 @@
 {
     "name": "ekandreas/bladerunner",
     "type": "wordpress-plugin",
-    "version": "1.4.3",
+    "version": "1.5",
     "description": "WordPress Blade L5 template engine",
     "keywords": ["laravel", "blade", "wordpress"],
     "license": "MIT",
     "authors": [
         {
             "name": "Andreas Ek",
-            "email": "andreas@aekab.se"
+            "email": "andreas@elseif.se"
         }
     ],
     "require": {
         "php": "^5.5.9 || ^7.0",
-        "illuminate/view": "5.2.*",
-        "illuminate/events": "5.2.*",
-        "illuminate/container": "5.2.*"
+        "illuminate/view": "5.3.*",
+        "illuminate/events": "5.3.*",
+        "illuminate/container": "5.3.*"
     },
     "require-dev": {
         "frozzare/wp-test-suite": "^1.0",
