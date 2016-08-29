@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name:        Bladerunner
-Plugin URI:         http://bladerunner.aekab.se
+Plugin URI:         http://bladerunner.elseif.se
 Description:        Laravel Blade template engine for WordPress
-Version:            1.4.3
+Version:            1.5
 Author:             Andreas Ek
-Author URI:         http://www.aekab.se/
+Author URI:         https://www.elseif.se/
 License:            MIT License
 License URI:        http://opensource.org/licenses/MIT
 */
