@@ -2,17 +2,17 @@
 Contributors: ekandreas
 Tags: Blade,templates,development,laravel
 Requires at least: 4.4
-Tested up to: 4.5.2
-Stable tag: 1.4.3
+Tested up to: 4.6
+Stable tag: 1.5
 License: MIT
 
 WordPress plugin for Blade L5 templating
 
 == Description ==
 Laravel Blade templating language for WordPress templates.
-Uses the latest v5.2 of Laravel templating engine.
+Uses the latest v5.3 of Laravel templating engine.
 
-Read more about the language syntax at the [Laravel docs](https://laravel.com/docs/5.2/blade)!
+Read more about the language syntax at the [Laravel docs](https://laravel.com/docs/5.3/blade)!
 
 To grab the latest WordPress distro, go to [Bladerunner](http://bladerunner.aekab.se)!
 
