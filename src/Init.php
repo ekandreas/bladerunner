@@ -9,8 +9,6 @@ class Init
 {
     /**
      * Check if the cache folder exists and is writable and assigns admin notice if not.
-     *
-     * @return void
      */
     public static function checkWriteableUpload()
     {
@@ -52,7 +50,7 @@ class Init
      * Helper function.
      * http://php.net/manual/en/function.rmdir.php#114183 - source.
      *
-     * @param  string $dir
+     * @param string $dir
      *
      * @return bool
      */
@@ -68,8 +66,6 @@ class Init
 
     /**
      * Echo admin notice inside wp-admin if cache folder don't exist.
-     *
-     * @return void
      */
     public static function noticeCreateCache()
     {
@@ -83,8 +79,6 @@ class Init
 
     /**
      * Echo admin notice inside wp-admin if cache folder not writable.
-     *
-     * @return void
      */
     public static function noticeWritableCache()
     {

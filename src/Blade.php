@@ -45,7 +45,7 @@ class Blade
      * @param string                        $cachePath
      * @param \Illuminate\Events\Dispatcher $events
      */
-    public function __construct($viewPaths = [], $cachePath, Dispatcher $events = null)
+    public function __construct($viewPaths, $cachePath, Dispatcher $events = null)
     {
         $this->container = new Container();
 
@@ -98,8 +98,6 @@ class Blade
 
     /**
      * Register the engine resolver instance.
-     *
-     * @return void
      */
     public function registerEngineResolver()
     {
@@ -123,20 +121,18 @@ class Blade
      * Register the PHP engine implementation.
      *
      * @param \Illuminate\View\Engines\EngineResolver $resolver
-     *
-     * @return void
      */
     public function registerPhpEngine($resolver)
     {
-        $resolver->register('php', function () { return new PhpEngine(); });
+        $resolver->register('php', function () {
+            return new PhpEngine();
+        });
     }
 
     /**
      * Register the Blade engine implementation.
      *
      * @param \Illuminate\View\Engines\EngineResolver $resolver
-     *
-     * @return void
      */
     public function registerBladeEngine($resolver)
     {
@@ -147,7 +143,6 @@ class Blade
         // this case will be the Blade compiler, so we'll first create the compiler
         // instance to pass into the engine so it can compile the views properly.
         $this->container->singleton('blade.compiler', function ($app) use ($me) {
-
             $cache = $me->cachePath;
             $compiler = new WPCompiler($app['files'], $cache);
 
@@ -170,8 +165,6 @@ class Blade
 
     /**
      * Register the view finder implementation.
-     *
-     * @return void
      */
     public function registerViewFinder()
     {
@@ -185,8 +178,6 @@ class Blade
 
     /**
      * Register the view environment.
-     *
-     * @return void
      */
     public function registerFactory()
     {
