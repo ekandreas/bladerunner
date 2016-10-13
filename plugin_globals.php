@@ -27,3 +27,22 @@ if (!function_exists('bladerunner')) {
         echo $blade->view()->make($view, $data)->render();
     }
 }
+
+add_action('save_post', 'Bladerunner\Cache::removeAllViews');
+add_action('admin_init', 'Bladerunner\Init::checkWriteableUpload');
+
+if (apply_filters('bladerunner/templates/handler', false)) {
+    $bladerunner_templates = new Bladerunner\Templates();
+    add_filter('template_include', [$bladerunner_templates, 'templateFilter'], 999);
+    add_action('template_redirect', [$bladerunner_templates, 'addPageTemplateFilters']);
+}
+
+add_action('admin_menu', function () {
+    add_submenu_page(
+        'tools.php',
+        'Bladerunner',
+        'Bladerunner',
+        'manage_options',
+        'bladerunner-admin-page',
+        'Bladerunner\Admin::view');
+});
