@@ -19,7 +19,7 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
 include_once 'src/Autoloader.php';
 
 $loader = new Bladerunner\Autoloader();
-$loader->addNamespace('Bladerunner', dirname( __FILE__ ) . '/src' );
+$loader->addNamespace('Bladerunner', dirname(__FILE__) . '/src');
 $loader->register();
 
 include_once 'plugin_globals.php';
