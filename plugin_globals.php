@@ -11,7 +11,7 @@ if (!function_exists('bladerunner')) {
      * @param string $view Name of the view with path, eg: views.pages.single
      * @param array  $data Any object data to use in the view template/file
      */
-    function bladerunner($view, $data = [])
+    function bladerunner($view, $data = [], $echo=true)
     {
         if (defined('WP_DEBUG') && true === WP_DEBUG) {
             $files = glob(\Bladerunner\Cache::path().'/*');
@@ -24,7 +24,14 @@ if (!function_exists('bladerunner')) {
 
         $bladepath = apply_filters('bladerunner/template/bladepath', get_stylesheet_directory());
         $blade = new \Bladerunner\Blade($bladepath, \Bladerunner\Cache::path());
-        echo $blade->view()->make($view, $data)->render();
+
+        $result = $blade->view()->make($view, $data)->render();
+
+        if ($echo) {
+            echo $result;
+        }
+
+        return $result;
     }
 }
 

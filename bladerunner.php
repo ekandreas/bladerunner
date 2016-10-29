@@ -3,7 +3,7 @@
 Plugin Name:        Bladerunner
 Plugin URI:         http://bladerunner.elseif.se
 Description:        Laravel Blade template engine for WordPress
-Version:            1.5.1
+Version:            1.5.2
 Author:             Andreas Ek
 Author URI:         https://www.elseif.se/
 License:            MIT License
