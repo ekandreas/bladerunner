@@ -25,6 +25,11 @@ if (!function_exists('bladerunner')) {
         $bladepath = apply_filters('bladerunner/template/bladepath', get_stylesheet_directory());
         $blade = new \Bladerunner\Blade($bladepath, \Bladerunner\Cache::path());
 
+        // filter for all views
+        $data = apply_filters("bladerunner/templates/data", $data);
+        // filter for data of a specific view
+        $data = apply_filters("bladerunner/templates/data/$view", $data);
+
         $result = $blade->view()->make($view, $data)->render();
 
         if ($echo) {
