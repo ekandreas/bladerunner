@@ -39,7 +39,7 @@ add_action('save_post', 'Bladerunner\Cache::removeAllViews');
 add_action('admin_init', 'Bladerunner\Init::checkWriteableUpload');
 
 if (apply_filters('bladerunner/templates/handler', false)) {
-    $bladerunner_templates = new Bladerunner\Templates();
+    $bladerunner_templates = new Bladerunner\Template();
     add_filter('template_include', [$bladerunner_templates, 'templateFilter'], 999);
     add_action('template_redirect', [$bladerunner_templates, 'addPageTemplateFilters']);
 }
