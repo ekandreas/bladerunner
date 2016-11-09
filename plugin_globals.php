@@ -31,9 +31,9 @@ if (!function_exists('bladerunner')) {
         $data = apply_filters("bladerunner/templates/data/$view", $data);
 
         // allow interaction with the View Factory for every rendered view
-        do_action("bladerunner/blade_initialized", $blade , $view );
+        do_action("bladerunner/blade_initialized", $blade, $view);
         // allow interaction with the View Factory for a specific view
-        do_action("bladerunner/blade_initialized/$view", $blade , $view );
+        do_action("bladerunner/blade_initialized/$view", $blade, $view);
 
         $result = $blade->view()->make($view, $data)->render();
 
