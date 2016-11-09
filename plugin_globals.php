@@ -25,6 +25,16 @@ if (!function_exists('bladerunner')) {
         $bladepath = apply_filters('bladerunner/template/bladepath', get_stylesheet_directory());
         $blade = new \Bladerunner\Blade($bladepath, \Bladerunner\Cache::path());
 
+        // filter for all views
+        $data = apply_filters("bladerunner/templates/data", $data);
+        // filter for data of a specific view
+        $data = apply_filters("bladerunner/templates/data/$view", $data);
+
+        // allow interaction with the View Factory for every rendered view
+        do_action("bladerunner/blade_initialized", $blade, $view);
+        // allow interaction with the View Factory for a specific view
+        do_action("bladerunner/blade_initialized/$view", $blade, $view);
+
         $result = $blade->view()->make($view, $data)->render();
 
         if ($echo) {
@@ -39,7 +49,7 @@ add_action('save_post', 'Bladerunner\Cache::removeAllViews');
 add_action('admin_init', 'Bladerunner\Init::checkWriteableUpload');
 
 if (apply_filters('bladerunner/templates/handler', false)) {
-    $bladerunner_templates = new Bladerunner\Templates();
+    $bladerunner_templates = new Bladerunner\Template();
     add_filter('template_include', [$bladerunner_templates, 'templateFilter'], 999);
     add_action('template_redirect', [$bladerunner_templates, 'addPageTemplateFilters']);
 }

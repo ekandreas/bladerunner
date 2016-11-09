@@ -30,7 +30,7 @@ class Template
 
         $cache = Cache::path();
         if (!file_exists($cache)) {
-            trigger_error("Bladerunner: Cache folder {$cache} does not exist.", E_WARNING);
+            trigger_error("Bladerunner: Cache folder {$cache} does not exist.", E_USER_WARNING);
 
             return $template;
         }
@@ -46,7 +46,7 @@ class Template
         }
 
         if (!file_exists($template)) {
-            trigger_error("Bladerunner: Missing template file {$template}", E_WARNING);
+            trigger_error("Bladerunner: Missing template file {$template}", E_USER_WARNING);
 
             return $template;
         }

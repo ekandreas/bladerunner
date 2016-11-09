@@ -101,17 +101,14 @@ class Blade
      */
     public function registerEngineResolver()
     {
-        $me = $this;
-
-        $this->container->singleton('view.engine.resolver', function ($app) use ($me) {
+        $this->container->singleton('view.engine.resolver', function ($app) {
             $resolver = new EngineResolver();
 
             // Next we will register the various engines with the resolver so that the
             // environment can resolve the engines it needs for various views based
             // on the extension of view files. We call a method for each engines.
-            foreach (['php', 'blade'] as $engine) {
-                $me->{'register'.ucfirst($engine).'Engine'}($resolver);
-            }
+            $this->registerPhpEngine($resolver);
+            $this->registerBladeEngine($resolver);
 
             return $resolver;
         });
