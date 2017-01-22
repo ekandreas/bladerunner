@@ -14,5 +14,3 @@ function view($view, $data = [])
 {
     return \Bladerunner\Container::current('blade')->render($view, $data);
 }
-
-
