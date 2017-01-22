@@ -1,13 +1,9 @@
 <?php
 use Illuminate\Contracts\Container\Container as ContainerContract;
 
-function bladerunner($view, $data = [], $echo = true)
+function bladerunner($view, $data = [])
 {
-    $result = view($view, $data);
-    if ($echo) {
-        echo $result;
-    }
-    return $result;
+    echo view($view, $data);
 }
 
 function view($view, $data = [])

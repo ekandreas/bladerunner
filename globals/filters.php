@@ -26,7 +26,10 @@ add_filter('template_include', function ($template) {
     $data = array_reduce(get_body_class(), function ($data, $class) use ($template) {
         return apply_filters("bladerunner/template/{$class}/data", $data, $template);
     }, []);
+
     echo view($template, $data);
+
+    //TODO: This is where it gets tricky, fix dep
 
     // Return a blank file to make WordPress happy
     return get_theme_file_path('index.php');
