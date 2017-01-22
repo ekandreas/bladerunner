@@ -1,210 +1,128 @@
 <?php
-
 namespace Bladerunner;
 
-use Illuminate\Container\Container;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Container\Container as ContainerContract;
+use Illuminate\Contracts\View\Factory as FactoryContract;
 use Illuminate\View\Engines\CompilerEngine;
-//use Illuminate\View\Compilers\BladeCompiler;
-use Illuminate\View\Engines\EngineResolver;
-use Illuminate\View\Engines\PhpEngine;
-use Illuminate\View\Factory;
-use Illuminate\View\FileViewFinder;
+use Illuminate\View\Engines\EngineInterface;
+use Illuminate\View\ViewFinderInterface;
 
+/**
+ * Class BladeProvider
+ * @method \Illuminate\View\View file($file, $data = [], $mergeData = [])
+ * @method \Illuminate\View\View make($file, $data = [], $mergeData = [])
+ */
 class Blade
 {
-    /**
-     * Array containing paths where to look for blade files.
-     *
-     * @var array
-     */
-    public $viewPaths;
+    /** @var ContainerContract */
+    protected $app;
 
-    /**
-     * Location where to store cached views.
-     *
-     * @var string
-     */
-    public $cachePath;
-
-    /**
-     * @var \Illuminate\Container\Container
-     */
-    protected $container;
-
-    /**
-     * @var \Illuminate\View\Factory
-     */
-    protected $instance;
-
-    /**
-     * Initialize class.
-     *
-     * @param array                         $viewPaths
-     * @param string                        $cachePath
-     * @param \Illuminate\Events\Dispatcher $events
-     */
-    public function __construct($viewPaths, $cachePath, Dispatcher $events = null)
+    public function __construct(FactoryContract $env, ContainerContract $app)
     {
-        $this->container = new Container();
-
-        $this->viewPaths = (array) $viewPaths;
-
-        $this->cachePath = $cachePath;
-
-        $this->registerFilesystem();
-
-        $this->registerEvents($events ?: new Dispatcher());
-
-        $this->registerEngineResolver();
-
-        $this->registerViewFinder();
-
-        $this->instance = $this->registerFactory();
+        $this->env = $env;
+        $this->app = $app;
     }
 
     /**
-     * Get the view instance.
-     *
-     * @return \Illuminate\View\Factory|void
-     */
-    public function view()
-    {
-        return $this->instance;
-    }
-
-    /**
-     * Register filesystem.
-     */
-    public function registerFilesystem()
-    {
-        $this->container->singleton('files', function () {
-            return new Filesystem();
-        });
-    }
-
-    /**
-     * Register events.
-     *
-     * @param \Illuminate\Events\Dispatcher $events
-     */
-    public function registerEvents(Dispatcher $events)
-    {
-        $this->container->singleton('events', function () use ($events) {
-            return $events;
-        });
-    }
-
-    /**
-     * Register the engine resolver instance.
-     */
-    public function registerEngineResolver()
-    {
-        $me = $this;
-
-        $this->container->singleton('view.engine.resolver', function ($app) use ($me) {
-            $resolver = new EngineResolver();
-
-            // Next we will register the various engines with the resolver so that the
-            // environment can resolve the engines it needs for various views based
-            // on the extension of view files. We call a method for each engines.
-            foreach (['php', 'blade'] as $engine) {
-                $me->{'register'.ucfirst($engine).'Engine'}($resolver);
-            }
-
-            return $resolver;
-        });
-    }
-
-    /**
-     * Register the PHP engine implementation.
-     *
-     * @param \Illuminate\View\Engines\EngineResolver $resolver
-     */
-    public function registerPhpEngine($resolver)
-    {
-        $resolver->register('php', function () {
-            return new PhpEngine();
-        });
-    }
-
-    /**
-     * Register the Blade engine implementation.
-     *
-     * @param \Illuminate\View\Engines\EngineResolver $resolver
-     */
-    public function registerBladeEngine($resolver)
-    {
-        $me = $this;
-        $app = $this->container;
-
-        // The Compiler engine requires an instance of the CompilerInterface, which in
-        // this case will be the Blade compiler, so we'll first create the compiler
-        // instance to pass into the engine so it can compile the views properly.
-        $this->container->singleton('blade.compiler', function ($app) use ($me) {
-            $cache = $me->cachePath;
-            $compiler = new WPCompiler($app['files'], $cache);
-
-            $extensions = CompilerExtensions::getAllExtensions();
-            if ($extensions && is_array($extensions)) {
-                foreach ($extensions as $extension) {
-                    $compiler->extend(function ($value) use ($extension) {
-                        return preg_replace($extension->pattern, $extension->replace, $value);
-                    });
-                }
-            }
-
-            return $compiler;
-        });
-
-        $resolver->register('blade', function () use ($app) {
-            return new CompilerEngine($app['blade.compiler'], $app['files']);
-        });
-    }
-
-    /**
-     * Register the view finder implementation.
-     */
-    public function registerViewFinder()
-    {
-        $me = $this;
-        $this->container->singleton('view.finder', function ($app) use ($me) {
-            $paths = $me->viewPaths;
-
-            return new FileViewFinder($app['files'], $paths);
-        });
-    }
-
-    /**
-     * Register the view environment.
-     */
-    public function registerFactory()
-    {
-        // Next we need to grab the engine resolver instance that will be used by the
-        // environment. The resolver will be used by an environment to get each of
-        // the various engine implementations such as plain PHP or Blade engine.
-        $resolver = $this->container['view.engine.resolver'];
-
-        $finder = $this->container['view.finder'];
-
-        $env = new Factory($resolver, $finder, $this->container['events']);
-
-        // We will also set the container instance on this view environment since the
-        // view composers may be classes registered in the container, which allows
-        // for great testable, flexible composers for the application developer.
-        $env->setContainer($this->container);
-
-        return $env;
-    }
-
-    /**
-     * Get the Blade compiler.
+     * Get the compiler
      *
      * @return \Illuminate\View\Compilers\BladeCompiler
      */
-    public function getCompiler()
+    public function compiler()
     {
-        return $this->container['blade.compiler'];
+        static $engineResolver;
+        if (!$engineResolver) {
+            $engineResolver = $this->app->make('view.engine.resolver');
+        }
+        return $engineResolver->resolve('blade')->getCompiler();
+    }
+
+    /**
+     * @param string $view
+     * @param array $data
+     * @param array $mergeData
+     * @return string
+     */
+    public function render($view, $data = [], $mergeData = [])
+    {
+        /** @var \Illuminate\Contracts\Filesystem\Filesystem $filesystem */
+        $filesystem = $this->app['files'];
+        return $this->{$filesystem->exists($view) ? 'file' : 'make'}($view, $data, $mergeData)->render();
+    }
+
+    /**
+     * @param string $file
+     * @param array $data
+     * @param array $mergeData
+     * @return string
+     */
+    public function compiledPath($file, $data = [], $mergeData = [])
+    {
+        $rendered = $this->file($file, $data, $mergeData);
+        /** @var EngineInterface $engine */
+        $engine = $rendered->getEngine();
+
+        if (!($engine instanceof CompilerEngine)) {
+            // Using PhpEngine, so just return the file
+            return $file;
+        }
+
+        $compiler = $engine->getCompiler();
+        $compiledPath = $compiler->getCompiledPath($rendered->getPath());
+        if ($compiler->isExpired($compiledPath)) {
+            $compiler->compile($file);
+        }
+        return $compiledPath;
+    }
+
+    /**
+     * @param string $file
+     * @return string
+     */
+    public function normalizeViewPath($file)
+    {
+        // Convert `\` to `/`
+        $view = str_replace('\\', '/', $file);
+
+        // Add namespace to path if necessary
+        $view = $this->applyNamespaceToPath($view);
+
+        // Remove unnecessary parts of the path
+        $view = str_replace(array_merge($this->app['config']['view.paths'], ['.blade.php', '.php']), '', $view);
+
+        // Remove superfluous and leading slashes
+        return ltrim(preg_replace('%//+%', '/', $view), '/');
+    }
+
+    /**
+     * Convert path to view namespace
+     * @param string $path
+     * @return string
+     */
+    public function applyNamespaceToPath($path)
+    {
+        /** @var ViewFinderInterface $finder */
+        $finder = $this->app['view.finder'];
+        if (!method_exists($finder, 'getHints')) {
+            return $path;
+        }
+        $delimiter = $finder::HINT_PATH_DELIMITER;
+        $hints = $finder->getHints();
+        $view = array_reduce(array_keys($hints), function ($view, $namespace) use ($delimiter, $hints) {
+            return str_replace($hints[$namespace], $namespace . $delimiter, $view);
+        }, $path);
+        return preg_replace("%{$delimiter}[\\/]*%", $delimiter, $view);
+    }
+
+    /**
+     * Pass any method to the view Factory instance.
+     *
+     * @param  string $method
+     * @param  array $params
+     * @return mixed
+     */
+    public function __call($method, $params)
+    {
+        return call_user_func_array([$this->env, $method], $params);
     }
 }

@@ -21,14 +21,16 @@ after_script:
 matrix:
   include:
     - php: 5.6
-      env: WP_VERSION=latest WP_MULTISITE=1
+      env: WP_VERSION=latest WP_MULTISITE=0
     - php: 5.6
-      env: WP_VERSION=4.0 WP_MULTISITE=0
-    - php: hhvm
-      env: WP_VERSION=latest WP_MULTISITE=1
+      env: WP_VERSION=nightly WP_MULTISITE=0
     - php: 7.0
       env: WP_VERSION=latest WP_MULTISITE=0
     - php: 7.0
+      env: WP_VERSION=nightly WP_MULTISITE=0
+    - php: 7.1
+      env: WP_VERSION=latest WP_MULTISITE=0
+    - php: 7.1
       env: WP_VERSION=nightly WP_MULTISITE=0
   fast_finish: true
 

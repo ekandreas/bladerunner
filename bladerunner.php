@@ -3,26 +3,25 @@
 Plugin Name:        Bladerunner
 Plugin URI:         http://bladerunner.elseif.se
 Description:        Laravel Blade template engine for WordPress
-Version:            1.5.2
+Version:            1.6
 Author:             Andreas Ek
 Author URI:         https://www.elseif.se/
 License:            MIT License
 License URI:        http://opensource.org/licenses/MIT
 */
 
-if (file_exists(__DIR__.'/vendor/autoload.php')) {
-    require_once __DIR__.'/vendor/autoload.php';
-} elseif (defined('WP_CONTENT_DIR') && file_exists(WP_CONTENT_DIR . '/vendor/autoload.php')) {
-    require_once WP_CONTENT_DIR . '/vendor/autoload.php';
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
 }
 
-include_once 'src/Autoloader.php';
+if (!class_exists('Bladerunner\\Container')) {
+    throw new \Exception("Composer instance missing! Have you run composer update?");
+}
 
-$loader = new Bladerunner\Autoloader();
-$loader->addNamespace('Bladerunner', dirname(__FILE__) . '/src');
-$loader->register();
-
-include_once 'plugin_globals.php';
-
-register_activation_hook(__FILE__, '\Bladerunner\init::createCacheDirectory');
-register_deactivation_hook(__FILE__, '\Bladerunner\init::deleteCacheDirectory');
+/**
+ * Register global files and functions
+ */
+array_map(function ($file) {
+    $file = "globals/{$file}.php";
+    require_once($file);
+}, ['helpers', 'setup', 'filters']);
