@@ -1,7 +1,7 @@
 {
     "name": "ekandreas/bladerunner",
     "type": "wordpress-plugin",
-    "version": "1.5.2",
+    "version": "1.6-dev",
     "description": "WordPress Blade L5 template engine",
     "keywords": ["laravel", "blade", "wordpress"],
     "license": "MIT",
@@ -13,10 +13,18 @@
     ],
     "require": {
         "php": "^5.6 || ^7.0",
-        "illuminate/view": "5.3.*"
+        "illuminate/config": "5.4.*",
+        "illuminate/view": "5.4.*"
     },
+    "autoload": {
+        "psr-4": {
+            "Bladerunner\\Tests\\": "tests/",
+            "Bladerunner\\": "src/"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
     "require-dev": {
-        "frozzare/wp-test-suite": "^1.0",
-        "ekandreas/testrunner": "dev-master"
+        "frozzare/wp-test-suite": "*"
     }
 }
