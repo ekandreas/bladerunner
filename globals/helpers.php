@@ -3,11 +3,11 @@
  * Global functions
  */
 
-if(!function_exists('bladerunner')) {
+if (!function_exists('bladerunner')) {
     function bladerunner($view, $data = [], $echo=true)
     {
         $result = view($view, $data);
-        if($echo) {
+        if ($echo) {
             echo $result;
             return null;
         }
@@ -15,7 +15,7 @@ if(!function_exists('bladerunner')) {
     }
 }
 
-if(!function_exists('view')) {
+if (!function_exists('view')) {
     function view($view, $data = [])
     {
         return \Bladerunner\Container::current('blade')->render($view, $data);
