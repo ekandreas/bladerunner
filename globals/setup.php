@@ -2,7 +2,7 @@
 use Illuminate\Contracts\Container\Container as ContainerContract;
 
 /**
- * Setup Sage options
+ * Setup Bladerunner options
  */
 add_action('after_setup_theme', function () {
     /**

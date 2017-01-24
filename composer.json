@@ -13,13 +13,8 @@
     ],
     "require": {
         "php": "^5.6 || ^7.0",
-        "illuminate/config": "5.4.x-dev",
-        "illuminate/view": "5.4.x-dev",
-        "illuminate/contracts": "5.4.x-dev",
-        "illuminate/container": "5.4.x-dev",
-        "illuminate/support": "5.4.x-dev",
-        "illuminate/events": "5.4.x-dev",
-        "illuminate/filesystem": "5.4.x-dev"
+        "illuminate/config": "5.4.*",
+        "illuminate/view": "5.4.*"
     },
     "autoload": {
         "psr-4": {
@@ -27,6 +22,8 @@
             "Bladerunner\\": "src/"
         }
     },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
     "require-dev": {
         "frozzare/wp-test-suite": "*"
     }

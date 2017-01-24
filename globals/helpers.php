@@ -1,12 +1,23 @@
 <?php
-use Illuminate\Contracts\Container\Container as ContainerContract;
+/**
+ * Global functions
+ */
 
-function bladerunner($view, $data = [])
-{
-    echo view($view, $data);
+if(!function_exists('bladerunner')) {
+    function bladerunner($view, $data = [], $echo=true)
+    {
+        $result = view($view, $data);
+        if($echo) {
+            echo $result;
+            return null;
+        }
+        return $result;
+    }
 }
 
-function view($view, $data = [])
-{
-    return \Bladerunner\Container::current('blade')->render($view, $data);
+if(!function_exists('view')) {
+    function view($view, $data = [])
+    {
+        return \Bladerunner\Container::current('blade')->render($view, $data);
+    }
 }
