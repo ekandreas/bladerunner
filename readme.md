@@ -19,6 +19,9 @@ composer require ekandreas/bladerunner:*
 
 If you don't use a composer based WordPress development environment you can download the latest distributed plugin at [Bladerunner site http://bladerunner.elseif.se](http://bladerunner.elseif.se) and install it the common way with zip upload to WordPress via wp-admin.
 
+## Release 1.6.1
+Just to update Laravel Blade engine upgrades
+
 ## Release 1.6
 Laravel 5.4 with Components and Slots!
 This is a completely rewrite, perhaps v2? Extracted from Roots Sage.
