@@ -19,21 +19,7 @@ Your theme still needs an index.php due to WordPress basic functionality. When r
 
 If you don't use a composer based WordPress development environment you can download the latest distributed plugin at [Bladerunner site http://bladerunner.aekab.se](http://bladerunner.aekab.se) and install it the common way with zip upload to WordPress via wp-admin.
 
-## Release 1.6.1 and 1.6.2
-Just to update Laravel Blade engine upgrades
-
-## Release 1.6
-Laravel 5.4 with Components and Slots!
-This is a completely rewrite, perhaps v2? Extracted from Roots Sage.
-Some breaking changes:
-* Laravel Config and View v5.4, these are in dev mode right now.
-* Global function view over old global bladerunner for no echo as default.
-* No template filters. You need to use "view" or "bladerunner" global functions in your ordinary WordPress templates.
-* No WP admin pages, this is a dev tool :-)
-
-## Release 1.5
-Now only supports PHP5.6 and greater.
-Laravel 5.3 is used as blade base.
+Releases to this plugin is listed last in this readme.
 
 ## Hello World
 1. Install the library with composer
@@ -193,4 +179,26 @@ Using *Testrunner* (required-dev package) and Docker the test should be exexuted
 ```bash
 vendor/bin/dep testrunner
 ```
+
+## Releases
+
+### 2.0-beta.1
+The working release with the controller concept included.
+
+### Release 1.6.1 and 1.6.2
+Just to update Laravel Blade engine upgrades
+
+### Release 1.6
+Laravel 5.4 with Components and Slots!
+This is a completely rewrite, perhaps v2? Extracted from Roots Sage.
+Some breaking changes:
+* Laravel Config and View v5.4, these are in dev mode right now.
+* Global function view over old global bladerunner for no echo as default.
+* No template filters. You need to use "view" or "bladerunner" global functions in your ordinary WordPress templates.
+* No WP admin pages, this is a dev tool :-)
+
+### Release 1.5
+Now only supports PHP5.6 and greater.
+Laravel 5.3 is used as blade base.
+
 
