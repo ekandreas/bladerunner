@@ -1,7 +1,7 @@
 <?php
 namespace Bladerunner;
 
-use Illuminate\Container\Container;
+use Illuminate\Container\Container as BaseContainer;
 use Illuminate\Contracts\Container\Container as ContainerContract;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
@@ -20,7 +20,7 @@ class BladeProvider extends ViewServiceProvider
     public function __construct(ContainerContract $container = null, $config = [])
     {
         /** @noinspection PhpParamsInspection */
-        parent::__construct($container ?: Container::getInstance());
+        parent::__construct($container ?: BaseContainer::getInstance());
 
         $this->app->bindIf('config', function () use ($config) {
             return $config;
