@@ -18,7 +18,9 @@ array_map(function ($type) {
             ])->unique()->toArray();
 
             foreach ($controllerPaths as $path) {
-                if(!is_string($path)) continue;
+                if (!is_string($path)) {
+                    continue;
+                }
                 $controllerPath = "{$path}/{$normalizedTemplate}.php";
                 if (file_exists($controllerPath)) {
                     add_filter('bladerunner/controllers/heap', function ($heap) use ($controllerPath) {
