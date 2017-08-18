@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Contracts\Container\Container as ContainerContract;
 
 /**
@@ -42,6 +43,12 @@ add_action('after_setup_theme', function () {
         (new \Bladerunner\BladeProvider($app))->register();
         return new \Bladerunner\Blade($app['view'], $app);
     });
+
+    \Bladerunner\Container::current('blade')->compiler()->directive('controller', function () {
+        return '<?php (new \Bladerunner\ControllerDebug(get_defined_vars())); ?>';
+    });
+
+
 });
 
 /**

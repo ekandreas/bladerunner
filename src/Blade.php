@@ -16,6 +16,7 @@ class Blade
 {
     /** @var ContainerContract */
     protected $app;
+    protected $env;
 
     public function __construct(FactoryContract $env, ContainerContract $app)
     {
