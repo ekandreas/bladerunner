@@ -73,7 +73,63 @@ or use compact, eg:
     bladerunner('views.pages.404', compact('module'));
 ```
 
-## Hooks & Filters
+## Controllers
+With version 1.7 controllers are added to Bladerunner.
+As default Bladerunner will look for extended classes in the theme folder + /controllers.
+If you would like to add or change the controller paths take a look below at filters!
+
+The controller class has to extend \Bladerunner\Controller to work.
+It will guess the path to the view but you can override this with `protected $view='your.custom.view.path''`
+
+The controller files follow the same hierarchy as WordPress.
+You can view the controller hierarchy by using the Blade directive `@debug`.
+
+Extend the Controller Class, it is recommended that the class name matches the filename.
+Create methods within the Controller Class:
+* Use public function to expose the returned values to the Blade views/s.
+* Use public static function to use the function within your Blade view/s.
+* Use protected function for internal controller methods as only public methods are exposed to the view. You can run them within __construct.
+
+### Controller example: 
+
+The following example will expose `$images` to `views/single.blade.php` 
+
+**controllers/Single.php**
+
+```php
+<?php
+
+namespace App;
+
+use Bladerunner\Controller;
+
+class Single extends Controller
+{
+    /**
+     * Return images from Advanced Custom Fields
+     *
+     * @return array
+     */
+    public function images()
+    {
+        return get_field('images');
+    }
+}
+```
+
+**views/single.blade.php**
+
+```php
+@if($images)
+  <ul>
+    @foreach($images as $image)
+      <li><img src="{{$image['sizes']['thumbnail']}}" alt="{{$image['alt']}}"></li>
+    @endforeach
+  </ul>
+@endif
+```
+
+## Hooks and Filters
 Bladerunner continuously implements filters and hooks to modify values and processes.
 
 ### Hooks
@@ -97,9 +153,19 @@ If you don't want Bladerunner to check for permissions form cache folder then se
 ```php
 add_filter('bladerunner/cache/permission', '__return_null');
 ```
-If you wan't to customize the base path where you have your views stored, use:
+If you wan't to customize the base paths where you have your views stored, use:
 ```php
-add_filter('bladerunner/template/bladepath', function ($path) { return $path . '/views'; });
+add_filter('bladerunner/template/bladepath', function ($paths) { 
+    $paths[] = PLUGIN_DIR . '/my-fancy-plugin/views';
+    return $path; 
+});
+```
+If you wan't to customize the controller paths where you have your controllers stored, use:
+```php
+add_filter('bladerunner/controller/paths', function ($paths) { 
+    $paths[] = PLUGIN_DIR . '/my-fancy-plugin/controllers';
+    return $path; 
+});
 ```
 
 #### Custom extensions
@@ -182,7 +248,7 @@ vendor/bin/dep testrunner
 
 ## Releases
 
-### 2.0-beta.1
+### 1.7-beta.1
 The working release with the controller concept included.
 
 ### Release 1.6.1 and 1.6.2

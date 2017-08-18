@@ -1,9 +1,5 @@
 <?php
 
-add_filter('bladerunner/controllers/path', function () {
-    return get_stylesheet_directory() . '/controllers';
-});
-
 /**
  * Template Hierarchy should search for .blade.php files
  */
@@ -16,15 +12,21 @@ array_map(function ($type) {
             ];
             $normalizedTemplate = preg_replace(array_keys($transforms), array_values($transforms), $template);
 
-            $path = apply_filters('bladerunner/controllers/path', '/') . "/{$normalizedTemplate}.php";
-            if (file_exists($path)) {
-                add_filter('bladerunner/controllers/heap', function ($heap) use ($path) {
-                    if (!in_array($path, $heap)) {
-                        $heap[] = $path;
-                    }
-                    return $heap;
-                });
-            }
+            $controllerPaths = collect([
+                apply_filters('bladerunner/controller/paths', []),
+                get_stylesheet_directory() . '/controllers',
+            ])->flatMap(function ($path) use ($normalizedTemplate) {
+                $controllerPath = "{$path}/{$normalizedTemplate}.php";
+                if(file_exists($controllerPath)) {
+                    add_filter('bladerunner/controllers/heap', function ($heap) use ($controllerPath) {
+                        if (!in_array($controllerPath, $heap)) {
+                            $heap[] = $controllerPath;
+                        }
+                        return $heap;
+                    });
+                }
+                return ["{$path}/{$normalizedTemplate}.php"];
+            })->unique()->toArray();
 
             return ["{$normalizedTemplate}.blade.php", "{$normalizedTemplate}.php"];
         }, $templates));
