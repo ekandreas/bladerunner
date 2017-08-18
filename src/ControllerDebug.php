@@ -56,7 +56,6 @@ class ControllerDebug
     public function controller()
     {
         // unset($this->data['post']);
-        echo $this->type;
         echo "<pre><strong>Controller:</strong><ul>";
         foreach ($this->data as $name => $item) {
             $item = (is_array($item) ? gettype($item) . '[' . count($item) . ']' : gettype($item));
