@@ -17,7 +17,7 @@ array_map(function ($type) {
                 get_stylesheet_directory() . '/controllers',
             ])->flatMap(function ($path) use ($normalizedTemplate) {
                 $controllerPath = "{$path}/{$normalizedTemplate}.php";
-                if(file_exists($controllerPath)) {
+                if (file_exists($controllerPath)) {
                     add_filter('bladerunner/controllers/heap', function ($heap) use ($controllerPath) {
                         if (!in_array($controllerPath, $heap)) {
                             $heap[] = $controllerPath;
