@@ -47,8 +47,6 @@ add_action('after_setup_theme', function () {
     \Bladerunner\Container::current('blade')->compiler()->directive('controller', function () {
         return '<?php (new \Bladerunner\ControllerDebug(get_defined_vars())); ?>';
     });
-
-
 });
 
 /**

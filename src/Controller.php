@@ -116,7 +116,8 @@ class Controller
         return ($this->active ? $this->data : []);
     }
 
-    public function __getView() {
+    public function __getView()
+    {
         return ($this->view ? $this->view : null);
     }
 }
