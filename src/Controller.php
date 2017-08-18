@@ -118,6 +118,17 @@ class Controller
 
     public function __getView()
     {
-        return ($this->view ? $this->view : null);
+        if($this->view) return $this->view;
+
+        $reflection = new \ReflectionClass($this);
+        $fileName = basename($reflection->getFileName(),'.php');
+
+        foreach (Container::current('config')['view']['paths'] as $path) {
+            if(file_exists("{$path}/{$fileName}.blade.php")) {
+                return basename($path).".{$fileName}";
+            }
+        }
+
+        return null;
     }
 }
