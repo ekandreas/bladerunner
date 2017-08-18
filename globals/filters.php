@@ -17,9 +17,11 @@ array_map(function ($type) {
             $normalizedTemplate = preg_replace(array_keys($transforms), array_values($transforms), $template);
 
             $path = apply_filters('bladerunner/controllers/path', '/') . "/{$normalizedTemplate}.php";
-            if(file_exists($path)) {
-                add_filter('bladerunner/controllers/heap', function($heap) use ($path) {
-                    if(!in_array($path, $heap)) $heap[] = $path;
+            if (file_exists($path)) {
+                add_filter('bladerunner/controllers/heap', function ($heap) use ($path) {
+                    if (!in_array($path, $heap)) {
+                        $heap[] = $path;
+                    }
                     return $heap;
                 });
             }
@@ -37,19 +39,18 @@ array_map(function ($type) {
 
 add_filter('template_include', function ($template) {
     $heap = apply_filters('bladerunner/controllers/heap', []);
-    if($heap) {
+    if ($heap) {
         foreach ($heap as $controllerFile) {
             require_once $controllerFile;
             $class = get_declared_classes();
             $class = '\\' . end($class);
             $controller = new $class();
-            if(is_subclass_of($class, "\\Bladerunner\\Controller") && $controller->__getView()) {
+            if (is_subclass_of($class, "\\Bladerunner\\Controller") && $controller->__getView()) {
                 $controller->__setup();
                 echo view($controller->__getView(), $controller->__getData());
                 return null;
             }
         }
-
     }
     return $template;
 }, PHP_INT_MAX);
