@@ -118,7 +118,7 @@ class Controller
 
     public function __getView()
     {
-        if ($this->view) {
+        if (isset($this->view) && $this->view) {
             return $this->view;
         }
 
