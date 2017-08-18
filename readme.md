@@ -248,7 +248,7 @@ vendor/bin/dep testrunner
 
 ## Releases
 
-### 1.7-beta.1
+### 1.7-beta
 The working release with the controller concept included.
 
 ### Release 1.6.1 and 1.6.2
