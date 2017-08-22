@@ -248,8 +248,8 @@ vendor/bin/dep testrunner
 
 ## Releases
 
-### 1.7-beta
-The working release with the controller concept included.
+### 1.7
+Controller concept included, read more about it at [https://bladerunner.elseif.se/controllers](https://bladerunner.elseif.se/controllers)
 
 ### Release 1.6.1 and 1.6.2
 Just to update Laravel Blade engine upgrades
