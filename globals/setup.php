@@ -48,20 +48,21 @@ add_action('after_setup_theme', function () {
         return '<?php (new \Bladerunner\ControllerDebug(get_defined_vars())); ?>';
     });
 
-    if (defined('WP_DEBUG') && WP_DEBUG) array_map('unlink',
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        array_map('unlink',
         glob(\Bladerunner\Config::repo('view.compiled') . '/*'));
+    }
 
 
     $extensions = apply_filters('bladerunner/extend', []);
     var_dump($extensions);
-    if($extensions && is_array($extensions)) {
+    if ($extensions && is_array($extensions)) {
         foreach ($extensions as $extension) {
-            if(is_callable($extension)) {
+            if (is_callable($extension)) {
                 \Bladerunner\Container::current('blade')->compiler()->extend($extension);
             }
         }
     }
-
 });
 
 /**

@@ -60,4 +60,3 @@ add_filter('template_include', function ($template) {
     }
     return $template;
 }, PHP_INT_MAX);
-
