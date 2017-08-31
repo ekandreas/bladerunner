@@ -61,7 +61,6 @@ add_action('after_setup_theme', function () {
         array_map('unlink',
         glob(\Bladerunner\Config::repo('view.compiled') . '/*'));
     }
-
 });
 
 /**
