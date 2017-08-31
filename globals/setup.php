@@ -48,12 +48,6 @@ add_action('after_setup_theme', function () {
         return '<?php (new \Bladerunner\ControllerDebug(get_defined_vars())); ?>';
     });
 
-    if (defined('WP_DEBUG') && WP_DEBUG) {
-        array_map('unlink',
-        glob(\Bladerunner\Config::repo('view.compiled') . '/*'));
-    }
-
-
     $extensions = apply_filters('bladerunner/extend', []);
     if ($extensions && is_array($extensions)) {
         foreach ($extensions as $extension) {
@@ -62,6 +56,12 @@ add_action('after_setup_theme', function () {
             }
         }
     }
+
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        array_map('unlink',
+        glob(\Bladerunner\Config::repo('view.compiled') . '/*'));
+    }
+
 });
 
 /**
