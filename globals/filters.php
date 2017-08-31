@@ -60,5 +60,3 @@ add_filter('template_include', function ($template) {
     }
     return $template;
 }, PHP_INT_MAX);
-
-//TODO: Make the filter bladerunner/controller/path to array as bladerunner/controller/paths to get use in eg plugins
