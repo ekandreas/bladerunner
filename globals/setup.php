@@ -55,7 +55,6 @@ add_action('after_setup_theme', function () {
 
 
     $extensions = apply_filters('bladerunner/extend', []);
-    var_dump($extensions);
     if ($extensions && is_array($extensions)) {
         foreach ($extensions as $extension) {
             if (is_callable($extension)) {
