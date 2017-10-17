@@ -1,6 +1,7 @@
 {
     "name": "ekandreas/bladerunner",
     "type": "wordpress-plugin",
+    "version": "1.7.3",
     "description": "WordPress Blade L5 template engine",
     "keywords": ["laravel", "blade", "wordpress"],
     "license": "MIT",
