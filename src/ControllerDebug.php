@@ -2,6 +2,8 @@
 
 namespace Bladerunner;
 
+use Brain\Hierarchy\Hierarchy;
+
 class ControllerDebug
 {
     protected $data;
@@ -55,7 +57,6 @@ class ControllerDebug
      */
     public function controller()
     {
-        // unset($this->data['post']);
         echo "<pre><strong>Controller:</strong><ul>";
         foreach ($this->data as $name => $item) {
             $item = (is_array($item) ? gettype($item) . '[' . count($item) . ']' : gettype($item));
@@ -72,10 +73,10 @@ class ControllerDebug
     public function templates()
     {
         global $wp_query;
-        $templates = (new \Brain\Hierarchy\Hierarchy())->getTemplates($wp_query);
+        $templates = (new Hierarchy())->getTemplates($wp_query);
         echo '<pre><strong>Controller Template Hierarchy (first has highest prio):</strong><ul>';
         foreach ($templates as $template) {
-            if (strpos($template, '.blade.php') || $template === 'index.php') {
+            if ($template === 'index.php') {
                 continue;
             }
             if ($template === 'index') {

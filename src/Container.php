@@ -10,13 +10,13 @@ class Container extends BaseContainer
      *
      * @param string $abstract
      * @param array $parameters
-     * @param ContainerContract $container
-     * @return ContainerContract|mixed
+     * @param Container $container
+     * @return Container|mixed
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public static function current($abstract = null, $parameters = [], ContainerContract $container = null)
+    public static function current($abstract = null, $parameters = [], Container $container = null)
     {
-        $container = $container ?: \Bladerunner\Container::getInstance();
+        $container = $container ?: Container::getInstance();
         if (!$abstract) {
             return $container;
         }
