@@ -12,10 +12,13 @@ array_map(function ($type) {
             ];
             $normalizedTemplate = preg_replace(array_keys($transforms), array_values($transforms), $template);
 
-            $controllerPaths = collect([
-                apply_filters('bladerunner/controller/paths', []),
-                get_stylesheet_directory() . '/controllers',
-            ])->unique()->toArray();
+            $paths = apply_filters('bladerunner/controller/paths', []);
+            if (!is_array($paths)) {
+                $paths = [$paths];
+            }
+            $paths[] = get_stylesheet_directory() . '/controllers';
+
+            $controllerPaths = collect($paths)->unique()->toArray();
 
             foreach ($controllerPaths as $path) {
                 if (!is_string($path)) {
@@ -39,8 +42,22 @@ array_map(function ($type) {
         return $result;
     });
 }, [
-    'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date', 'home',
-    'frontpage', 'page', 'paged', 'search', 'single', 'singular', 'attachment'
+    'index',
+    '404',
+    'archive',
+    'author',
+    'category',
+    'tag',
+    'taxonomy',
+    'date',
+    'home',
+    'frontpage',
+    'page',
+    'paged',
+    'search',
+    'single',
+    'singular',
+    'attachment'
 ]);
 
 add_filter('template_include', function ($template) {
