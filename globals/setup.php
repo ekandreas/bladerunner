@@ -17,15 +17,22 @@ add_action('after_setup_theme', function () {
         'uri.template' => get_template_directory_uri(),
     ];
 
-    $viewPaths = collect(preg_replace('%[\/]?(templates)?[\/.]*?$%', '', [
-        apply_filters('bladerunner/template/bladepath', $paths['dir.stylesheet']),
-        $paths['dir.stylesheet'] . DIRECTORY_SEPARATOR . 'views',
-        STYLESHEETPATH,
-        TEMPLATEPATH,
-    ]))
+    $bladePaths = apply_filters('bladerunner/template/bladepath', $paths['dir.stylesheet']);
+    if (!is_array($bladePaths)) {
+        $bladePaths = [$bladePaths];
+    }
+
+    $bladePaths[] = $paths['dir.stylesheet'] . DIRECTORY_SEPARATOR . 'views';
+    $bladePaths[] = STYLESHEETPATH;
+    $bladePaths[] = TEMPLATEPATH;
+
+    $viewPaths = array_values(collect($bladePaths, preg_replace('%[\/]?(templates)?[\/.]*?$%', '', $bladePaths))
         ->flatMap(function ($path) {
+            if (strstr($path, '/views')) {
+                return [$path, $path];
+            }
             return ["{$path}/templates", $path];
-        })->unique()->toArray();
+        })->unique()->toArray());
 
     \Bladerunner\Config::repo([
             'view.compiled' => "{$paths['dir.upload']}/.cache",
@@ -59,7 +66,7 @@ add_action('after_setup_theme', function () {
 
     if (defined('WP_DEBUG') && WP_DEBUG) {
         array_map('unlink',
-        glob(\Bladerunner\Config::repo('view.compiled') . '/*'));
+            glob(\Bladerunner\Config::repo('view.compiled') . '/*'));
     }
 });
 
