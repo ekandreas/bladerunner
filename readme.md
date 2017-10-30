@@ -243,26 +243,3 @@ Using *Testrunner* (required-dev package) and Docker the test should be exexuted
 ```bash
 vendor/bin/dep testrunner
 ```
-
-## Releases
-
-### 1.7
-Controller concept included, read more about it at [https://bladerunner.elseif.se/controllers](https://bladerunner.elseif.se/controllers)
-
-### Release 1.6.1 and 1.6.2
-Just to update Laravel Blade engine upgrades
-
-### Release 1.6
-Laravel 5.4 with Components and Slots!
-This is a completely rewrite, perhaps v2? Extracted from Roots Sage.
-Some breaking changes:
-* Laravel Config and View v5.4, these are in dev mode right now.
-* Global function view over old global bladerunner for no echo as default.
-* No template filters. You need to use "view" or "bladerunner" global functions in your ordinary WordPress templates.
-* No WP admin pages, this is a dev tool :-)
-
-### Release 1.5
-Now only supports PHP5.6 and greater.
-Laravel 5.3 is used as blade base.
-
-
