@@ -155,9 +155,12 @@ add_filter('bladerunner/cache/permission', '__return_null');
 ```
 If you wan't to customize the base paths where you have your views stored, use:
 ```php
-add_filter('bladerunner/template/bladepath', function ($paths) { 
-    $paths[] = PLUGIN_DIR . '/my-fancy-plugin/views';
-    return $path; 
+add_filter('bladerunner/template/bladepath', function ($paths) {
+    if (!is_array($paths)) {
+        $paths = [$paths];
+    }
+    $paths[] = ABSPATH . '../../resources/views';
+    return $paths;
 });
 ```
 If you wan't to customize the controller paths where you have your controllers stored, use:
