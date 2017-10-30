@@ -166,58 +166,7 @@ add_filter('bladerunner/controller/paths', function ($paths) {
 });
 ```
 
-#### Custom extensions
-If you are comfortable with regular expressions and want to add your own extensions to your templates use the filter ``bladerunner/extend``.
-Note! It takes one *array* as parameter and requires two keys; "pattern" and "replace".
-
-```php
-$extensions[] = [
-	'pattern' => '...',
-	'replace' => '...',
-];
-```
-
-Use the filter as possible way to add your own custom extensions.
-
-In this example we want to add ``@mysyntax`` as a custom extension.
-```php
-/*
- * Add custom extension @mysyntax to Bladerunner
- */
-add_filter('bladerunner/extend', function($extensions) {
-    $extensions[] = [
-    	'pattern' => '/(\s*)@mysyntax(\s*)/',
-    	'replace' => '$1<?php echo "MYSYNTAX COMPILED!"; ?>$2',
-    ];
-    return $extensions;
-});
-```
-Then use your new syntax inside a WordPress blade template like so:
-```php
-	@mysyntax
-```
-
 We will soon add more WordPress extenstions to the Bladerunner engine. Please give us your great examples to implement!
-
-#### Template Data Filter
-A simple way to pass data to a given view before it's loaded.
-
-Set the filter ``bladerunner/templates/data/{view}`` before running a template to pass custom data to the template, eg:
-```php
-$data = [
-	'this' => 'that',
-	'other' => 'perhaps',
-];
-add_filter('bladerunner/templates/data/single', $data);
-```
-
-Inside your "single.blade.php" / view file you will be able to access the passed data like so:
-```php
-{{ $data['this'] }}
-{{ $data['other'] }}
-```
-
-Default value for data is an empty array.
 
 ## Links
 * [Bladerunner site with documentation and distro](http://bladerunner.aekab.se)
