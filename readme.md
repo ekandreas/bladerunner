@@ -143,16 +143,11 @@ add_filter('bladerunner/cache/path', function() {
 });
 ```
 
-Permission settings to cache folder, default 777
+If you don't want Bladerunner to create the cache folder:
 ```php
-add_filter('bladerunner/cache/permission', function() {
-	return 644;
-});
+add_filter('bladerunner/cache/make', false);
 ```
-If you don't want Bladerunner to check for permissions form cache folder then set the return to null, eg:
-```php
-add_filter('bladerunner/cache/permission', '__return_null');
-```
+
 If you wan't to customize the base paths where you have your views stored, use:
 ```php
 add_filter('bladerunner/template/bladepath', function ($paths) { 

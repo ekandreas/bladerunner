@@ -18,7 +18,7 @@ add_action('after_setup_theme', function () {
     ];
 
     \Bladerunner\Config::repo([
-            'view.compiled' => "{$paths['dir.upload']}/.cache",
+            'view.compiled' => apply_filters('bladerunner/cache/path', "{$paths['dir.upload']}/.cache"),
             'view.paths' => \Bladerunner\Config::viewPaths(),
         ] + $paths);
 
@@ -27,9 +27,12 @@ add_action('after_setup_theme', function () {
      */
     Bladerunner\Container::current()->singleton('bladerunner.blade', function (ContainerContract $app) {
         $cachePath = Bladerunner\Config::repo('view.compiled');
-        if (!file_exists($cachePath)) {
+
+        $makePath = apply_filters('bladerunner/cache/make', true);
+        if ($makePath && !file_exists($cachePath)) {
             wp_mkdir_p($cachePath);
         }
+
         (new \Bladerunner\BladeProvider($app))->register();
         return new \Bladerunner\Blade($app['view'], $app);
     });
