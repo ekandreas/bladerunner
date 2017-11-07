@@ -145,7 +145,9 @@ add_filter('bladerunner/cache/path', function() {
 
 If you don't want Bladerunner to create the cache folder:
 ```php
-add_filter('bladerunner/cache/make', false);
+add_filter('bladerunner/cache/make', function() {
+    return false;
+});
 ```
 
 If you wan't to customize the base paths where you have your views stored, use:
