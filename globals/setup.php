@@ -49,11 +49,6 @@ add_action('after_setup_theme', function () {
             }
         }
     }
-
-    if (defined('WP_DEBUG') && WP_DEBUG) {
-        array_map('unlink',
-            glob(\Bladerunner\Config::repo('view.compiled') . '/*'));
-    }
 });
 
 /**
