@@ -24,4 +24,41 @@ class Config
         }
         return Container::current('config')->get($key, $default);
     }
+
+    /**
+     * Gets all valid paths to views and templates through the installation
+     * @return array
+     */
+    public static function viewPaths()
+    {
+        $bladePaths = apply_filters('bladerunner/template/bladepath', get_stylesheet_directory());
+        if (!is_array($bladePaths)) {
+            $bladePaths = [$bladePaths];
+        }
+
+        $stylesheetPath = get_stylesheet_directory();
+        $templatePath = get_template_directory();
+
+        $bladePaths[] = $stylesheetPath . DIRECTORY_SEPARATOR . 'views';
+        $bladePaths[] = $stylesheetPath . DIRECTORY_SEPARATOR . 'views';
+
+        $themePaths = [
+            $stylesheetPath,
+            $stylesheetPath . DIRECTORY_SEPARATOR . 'templates',
+            $templatePath,
+            $templatePath . DIRECTORY_SEPARATOR . 'templates',
+            STYLESHEETPATH, // compability
+            STYLESHEETPATH . DIRECTORY_SEPARATOR . 'templates',
+            TEMPLATEPATH, // compability
+            TEMPLATEPATH . DIRECTORY_SEPARATOR . 'templates',
+        ];
+
+        $bladePaths = array_merge($bladePaths, $themePaths);
+
+        $viewPaths = array_values(
+            collect($bladePaths, preg_replace('%[\/]?(templates)?[\/.]*?$%', '', $bladePaths))->unique()->toArray()
+        );
+
+        return $viewPaths;
+    }
 }

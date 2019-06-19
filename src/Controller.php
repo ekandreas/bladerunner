@@ -118,6 +118,10 @@ class Controller
 
     public function __getView()
     {
+        if (isset($this->template) && $this->template) {
+            return $this->template;
+        }
+
         if (isset($this->view) && $this->view) {
             return $this->view;
         }

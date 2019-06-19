@@ -12,7 +12,7 @@ WordPress plugin for Laravel Blade templating.
 To install it to your Composer based WordPress installation:
 
 ```
-composer require ekandreas/bladerunner:*
+composer require ekandreas/bladerunner
 ```
 Activate the plugin inside WordPress and templates with *.blade.php are inspected and active.
 Your theme still needs an index.php due to WordPress basic functionality. When removed the theme is known as broken.
@@ -23,14 +23,14 @@ Releases to this plugin is listed last in this readme.
 
 ## Hello World
 1. Install the library with composer
-2. Make sure the cache-folder is writeable in uploads, eg ../wp-content/uploads/.cache
+2. Make sure the cache-folder is writeable in uploads, eg `../wp-content/uploads/.cache`
 3. Activate the plugin
 4. Create a view, eg:
 ```twig
 <!-- view file: views/pages/index.blade.php -->
 Hello World Page rendered at {{ date('Y-m-d H:i:s') }}
 ```
-5. In your index.php, add a global call for the view created, eg:
+5. In your `index.php`, add a global call for the view created, eg:
 ```php
 <?php
     bladerunner('views.pages.index')
@@ -39,20 +39,20 @@ Hello World Page rendered at {{ date('Y-m-d H:i:s') }}
 [https://laravel.com/docs/5.2/blade](https://laravel.com/docs/5.2/blade)
 
 ## Cache
-* If WP_DEBUG is set and true then templates always will be rendered and updated.
-* View files (cache) is invalidated at save_post.
-* (It's a really good idea to empty the .cache folder inside "uploads" when develop templates. Eg, create a "del" command inside your gulp-file.)
+* If `WP_DEBUG` is set and true then templates always will be rendered and updated.
+* View files (cache) is invalidated at `save_post`
+* (It's a really good idea to empty the .cache folder inside `uploads` when develop templates. Eg, create a `del` command inside your gulp-file.)
 
 ## Directories
-* Your cached views will always be stored in your wp upload folder, .cache.
+* Your cached views will always be stored in your wp upload folder, `.cache`
 * Your views must be placed within your theme folder.
-* Your views must have .blade.php extension.
+* Your views must have `.blade.php` extension.
 
 ## Template helper
-There is a template helper function named "bladerunner", defined globally to use in standard WordPress templates.
+There is a template helper function named `bladerunner`, defined globally to use in standard WordPress templates.
 
 Example:
-You want to create a 404-template and don't want to use the .blade.php extension to the template file.
+You want to create a 404-template and don't want to use the `.blade.php` extension to the template file.
 
 * Create a 404.php in the theme root.
 * Add the following code to the template:
@@ -60,9 +60,9 @@ You want to create a 404-template and don't want to use the .blade.php extension
 <?php
     bladerunner('views.pages.404');
 ```
-* In the folder "views/pages", create a blade template "404.blade.php".
+* In the folder `views/pages`, create a blade template `404.blade.php`
 
-You can pass any data with the global "bladerunner" function like so,
+You can pass any data with the global `bladerunner` function like so,
 ```php
 <?php
     bladerunner('views.pages.404', ['module'=>$module]);
@@ -88,7 +88,7 @@ Extend the Controller Class, it is recommended that the class name matches the f
 Create methods within the Controller Class:
 * Use public function to expose the returned values to the Blade views/s.
 * Use public static function to use the function within your Blade view/s.
-* Use protected function for internal controller methods as only public methods are exposed to the view. You can run them within __construct.
+* Use protected function for internal controller methods as only public methods are exposed to the view. You can run them within `__construct`
 
 ### Controller example: 
 
@@ -143,21 +143,28 @@ add_filter('bladerunner/cache/path', function() {
 });
 ```
 
-Permission settings to cache folder, default 777
+If you don't want Bladerunner to create the cache folder:
 ```php
-add_filter('bladerunner/cache/permission', function() {
-	return 644;
+add_filter('bladerunner/cache/make', function() {
+    return false;
 });
 ```
-If you don't want Bladerunner to check for permissions form cache folder then set the return to null, eg:
+
+If you don't want Blade to use cached view files:
 ```php
-add_filter('bladerunner/cache/permission', '__return_null');
+add_filter('bladerunner/cache/disable', function() {
+    return true;
+});
 ```
+
 If you wan't to customize the base paths where you have your views stored, use:
 ```php
-add_filter('bladerunner/template/bladepath', function ($paths) { 
-    $paths[] = PLUGIN_DIR . '/my-fancy-plugin/views';
-    return $path; 
+add_filter('bladerunner/template/bladepath', function ($paths) {
+    if (!is_array($paths)) {
+        $paths = [$paths];
+    }
+    $paths[] = ABSPATH . '../../resources/views';
+    return $paths;
 });
 ```
 If you wan't to customize the controller paths where you have your controllers stored, use:
@@ -168,58 +175,7 @@ add_filter('bladerunner/controller/paths', function ($paths) {
 });
 ```
 
-#### Custom extensions
-If you are comfortable with regular expressions and want to add your own extensions to your templates use the filter ``bladerunner/extend``.
-Note! It takes one *array* as parameter and requires two keys; "pattern" and "replace".
-
-```php
-$extensions[] = [
-	'pattern' => '...',
-	'replace' => '...',
-];
-```
-
-Use the filter as possible way to add your own custom extensions.
-
-In this example we want to add ``@mysyntax`` as a custom extension.
-```php
-/*
- * Add custom extension @mysyntax to Bladerunner
- */
-add_filter('bladerunner/extend', function($extensions) {
-    $extensions[] = [
-    	'pattern' => '/(\s*)@mysyntax(\s*)/',
-    	'replace' => '$1<?php echo "MYSYNTAX COMPILED!"; ?>$2',
-    ];
-    return $extensions;
-});
-```
-Then use your new syntax inside a WordPress blade template like so:
-```php
-	@mysyntax
-```
-
 We will soon add more WordPress extenstions to the Bladerunner engine. Please give us your great examples to implement!
-
-#### Template Data Filter
-A simple way to pass data to a given view before it's loaded.
-
-Set the filter ``bladerunner/templates/data/{view}`` before running a template to pass custom data to the template, eg:
-```php
-$data = [
-	'this' => 'that',
-	'other' => 'perhaps',
-];
-add_filter('bladerunner/templates/data/single', $data);
-```
-
-Inside your "single.blade.php" / view file you will be able to access the passed data like so:
-```php
-{{ $data['this'] }}
-{{ $data['other'] }}
-```
-
-Default value for data is an empty array.
 
 ## Links
 * [Bladerunner site with documentation and distro](http://bladerunner.aekab.se)
@@ -245,26 +201,3 @@ Using *Testrunner* (required-dev package) and Docker the test should be exexuted
 ```bash
 vendor/bin/dep testrunner
 ```
-
-## Releases
-
-### 1.7
-Controller concept included, read more about it at [https://bladerunner.elseif.se/controllers](https://bladerunner.elseif.se/controllers)
-
-### Release 1.6.1 and 1.6.2
-Just to update Laravel Blade engine upgrades
-
-### Release 1.6
-Laravel 5.4 with Components and Slots!
-This is a completely rewrite, perhaps v2? Extracted from Roots Sage.
-Some breaking changes:
-* Laravel Config and View v5.4, these are in dev mode right now.
-* Global function view over old global bladerunner for no echo as default.
-* No template filters. You need to use "view" or "bladerunner" global functions in your ordinary WordPress templates.
-* No WP admin pages, this is a dev tool :-)
-
-### Release 1.5
-Now only supports PHP5.6 and greater.
-Laravel 5.3 is used as blade base.
-
-
