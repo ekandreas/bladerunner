@@ -150,6 +150,13 @@ add_filter('bladerunner/cache/make', function() {
 });
 ```
 
+If you don't want Blade to use cached view files:
+```php
+add_filter('bladerunner/cache/disable', function() {
+    return true;
+});
+```
+
 If you wan't to customize the base paths where you have your views stored, use:
 ```php
 add_filter('bladerunner/template/bladepath', function ($paths) {
