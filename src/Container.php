@@ -1,9 +1,9 @@
 <?php
 namespace Bladerunner;
 
-use Illuminate\Container\Container as BaseContainer;
+use Illuminate\Container\Container as ContainerContainer;
 
-class Container extends BaseContainer
+class Container extends ContainerContainer
 {
     /**
      * Get the bladerunner container.
@@ -22,6 +22,6 @@ class Container extends BaseContainer
         }
         return $container->bound($abstract)
             ? $container->make($abstract, $parameters)
-            : $container->make("bladerunner.{$abstract}", $parameters);
+            : $container->make("\\Bladerunner\\{$abstract}", $parameters);
     }
 }
