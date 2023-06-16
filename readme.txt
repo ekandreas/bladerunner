@@ -3,10 +3,10 @@ Contributors: ekandreas
 Tags: Blade,templates,development,laravel
 Requires at least: 4.4
 Tested up to: 5.6.1
-Stable tag: 1.8.1
+Stable tag: 1.8.2
 License: MIT
 
-WordPress plugin for Blade L5/6/7/8 templating
+WordPress plugin for Blade L5/6/7/8/9/10 templating
 
 == Description ==
 Laravel Blade templating language for WordPress templates.
